@@ -1,3 +1,52 @@
 # ctf-writeup-collection
-# A CTF A WEEK!!
-Collecting all the ctf matches I've attened these days
+
+## Mostly pwn, keep updating.
+
+### Title-List
+- [ ] ByteCTF-2021
+	- [ ] bytezoom
+	- [ ] byteCSMS
+- [ ] HWS_online-2022
+	- [ ] house_of_husk
+	- [ ] peach
+	- [ ] grape
+- [ ] SUSCTF-2022
+	- [ ] rain
+	- [x] happyTree
+	- [ ] mujs
+	- [ ] kqueue
+	- [ ] kqueue_rev
+- [ ] d3ctf-2022
+	- [ ] d3fuse
+	- [ ] d3bpf
+	- [ ] d3guard
+	- [ ] d3kheap
+	- [ ] d3bpf-v2
+	- [ ] smarCal
+- [x] utCTF-2022
+	- [x] bloat
+	- [x] automated-exp-gen
+	- [x] smol
+- [x] wolvseccon-2022
+	- [x] Us3_th3_F0rc3
+- [ ] zer0pts-2022
+	- [ ] 0av
+	- [x] modern-rome
+	- [ ] memsafed
+	- [ ] sbxnote
+	- [ ] redis-lite
+- [ ] spaceHerosCTF-2022
+	- [x] rule_of_2
+	- [x] rings_of_saturn
+	- [ ] fuzz_lightyear
+- [ ] HackPack-2022
+	- [ ] cerebrum-boggled
+- [ ] \*CTF-2022 | (StarCTF-2022)
+	- [ ] examination
+	- [ ] babynote
+	- [ ] ping
+	- [ ] babyarm
+
+--------
+
+More detailed wp can be found in my [homepage](https://avavaaya.github.io/).
