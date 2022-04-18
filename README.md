@@ -2,7 +2,7 @@
 
 ## Mostly pwn, keep updating.
 
-### Title-List
+### Challenge-List
 - [ ] ByteCTF-2021
 	- [ ] bytezoom
 	- [ ] byteCSMS
@@ -13,6 +13,7 @@
 - [ ] SUSCTF-2022
 	- [ ] rain
 	- [x] happyTree
+		 - glibc2.27 | tcache
 	- [ ] mujs
 	- [ ] kqueue
 	- [ ] kqueue_rev
@@ -25,10 +26,12 @@
 	- [ ] smarCal
 - [x] utCTF-2022
 	- [x] bloat
+		 - kernel
 	- [x] automated-exp-gen
 	- [x] smol
 - [x] wolvseccon-2022
 	- [x] Us3_th3_F0rc3
+		 - house_of_force
 - [ ] zer0pts-2022
 	- [ ] 0av
 	- [x] modern-rome
@@ -43,7 +46,7 @@
 	- [x] cerebrum-boggled
 		 - brainfuck-jit | rop | rust
 - [ ] \*CTF-2022 | (StarCTF-2022)
-	- [ ] examination
+	- [x] examination
 	- [ ] babynote
 	- [ ] ping
 	- [ ] babyarm
