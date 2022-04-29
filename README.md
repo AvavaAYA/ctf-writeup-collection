@@ -3,6 +3,9 @@
 ## Mostly pwn, keep updating.
 
 ### Challenge-List
+- [x] RoarCTF-2019
+	- [x] realloc_magic
+		 - glibc2.27 | realloc | IO
 - [ ] ByteCTF-2021
 	- [ ] bytezoom
 	- [ ] byteCSMS
@@ -47,9 +50,15 @@
 		 - brainfuck-jit | rop | rust
 - [ ] \*CTF-2022 | (StarCTF-2022)
 	- [x] examination
+		 - glibc2.31 | heapfengshui
 	- [ ] babynote
 	- [ ] ping
 	- [ ] babyarm
+- [ ] MRCTF-2022
+	- [ ] toy_bricks
+	- [ ] zigzag
+	- [ ] ezbash
+	- [ ] dynamic
 
 --------
 
