@@ -59,6 +59,10 @@
 	- [ ] zigzag
 	- [ ] ezbash
 	- [ ] dynamic
+- [ ] PatriotCTF-2022
+	- [ ] mcchttp
+	- [x] Password-Manager
+
 
 --------
 
