@@ -62,6 +62,21 @@
 - [ ] PatriotCTF-2022
 	- [ ] mcchttp
 	- [x] Password-Manager
+- [ ] DASCTF-MAY-2022
+	- [ ] 山重水复
+	- [ ] twists-and-turns
+	- [ ] gift
+- [ ] Dest0g3-520
+	- [x] stack
+	- [x] ezpwn
+	- [x] ezkiwi
+		- glibc2.31 | IO-attack | tcache
+	- [x] ezuaf
+		- glibc2.33 | tcache
+	- [x] dest_love
+		- string_fmt
+	- [ ] emma
+	- [ ] dest0g3_heap
 
 
 --------
