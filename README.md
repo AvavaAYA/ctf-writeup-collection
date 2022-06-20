@@ -81,6 +81,13 @@
 	- [x] login-nomal
 	- [ ] satool
 	- [x] newest_note
+		- glibc2.34 | tcache & fastbin_doublefree
+- [ ] ciscn-2022-华东北
+	- [x] duck
+		- glibc2.34 | IO-attack
+	- [x] bigduck
+		- glibc2.33 | setcontext | orw
+	- [ ] blue
 
 --------
 
