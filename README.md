@@ -2,6 +2,15 @@
 
 ## Mostly pwn, keep updating.
 
+### 新版本利用方法
+
+现在很多题中`free_hook`和`malloc_hook`都不能用了，最近打国内比赛遇到更多的是新版本下的利用，风水反而没怎么见过，因此想拓展一下任意地址写成功后的利用思路，等考完期末开始更新.
+
+ - [ ] House_of_Emma
+ - [ ] House_of_kiwi
+ - [ ] House_of_pig
+ - [ ] House_of_banana
+
 ### Challenge-List
 - [x] RoarCTF-2019
 	- [x] realloc_magic

