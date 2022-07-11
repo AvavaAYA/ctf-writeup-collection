@@ -651,7 +651,7 @@ io.close()
 
 exp:
 
-```python=
+```python
 from pwn import *
 
 lib=ELF("./libc.so.6")
