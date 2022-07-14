@@ -6,7 +6,7 @@
 
 现在很多题中`free_hook`和`malloc_hook`都不能用了，最近打国内比赛遇到更多的是新版本下的利用，因此想拓展一下任意地址写成功后的利用思路:
 
- - [ ] House_of_Emma
+ - [ ] House_of_Emma	[House_of_Emma](https://www.anquanke.com/post/id/260614) | [mp_](https://mp.weixin.qq.com/s/vdfDBN6uXd0VvI_WwQ-kgw)
  - [ ] House_of_kiwi
  - [ ] House_of_pig
  - [ ] House_of_banana
