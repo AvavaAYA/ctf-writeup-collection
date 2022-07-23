@@ -112,7 +112,7 @@
 - [ ] PCB-2022 | 鹏城杯-2022-online
 	- [x] A_fruit
 	- [ ] arm_prtoocol
-	- [ ] fruitshop
+	- [x] fruitshop
 	- [ ] signin_ROP
 
 --------
