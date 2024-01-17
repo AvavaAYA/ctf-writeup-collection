@@ -12,6 +12,7 @@
     - [warmup23 (glibc | off by null)](#warmup23-glibc--off-by-null)
   - [TPCTF 2023 (Jeopardy)](#tpctf-2023-jeopardy)
     - [core](#core)
+    - [core-revenge](#core-revenge)
   - [WMCTF 2023 (Jeopardy)](#wmctf-2023-jeopardy)
     - [blindless](#blindless)
   - [HackerGame 2022 (Jeopardy)](#hackergame-2022-jeopardy)
@@ -55,6 +56,10 @@
 ### core
 
 - [attachments](https://drive.google.com/file/d/1F-vr8dpZfiPZx1l2_8zEXnzQdGyqHvvb/view?usp=sharing)
+
+### core-revenge
+
+- [attachments](https://drive.google.com/file/d/133XUhPJpuwfhOqt8IJH8x9J1760wWCfq/view?usp=sharing)
 
 ## WMCTF 2023 (Jeopardy)
 
