@@ -10,6 +10,12 @@
     - [chatting (C++ | fastbin double free)](#chatting-c--fastbin-double-free)
     - [simpleinterpreter (glibc)](#simpleinterpreter-glibc)
     - [warmup23 (glibc | off by null)](#warmup23-glibc--off-by-null)
+  - [TPCTF 2023 (Jeopardy)](#tpctf-2023-jeopardy)
+    - [core](#core)
+  - [WMCTF 2023 (Jeopardy)](#wmctf-2023-jeopardy)
+    - [blindless](#blindless)
+  - [HackerGame 2022 (Jeopardy)](#hackergame-2022-jeopardy)
+    - [no_open](#no_open)
 - [Acknowledgements](#acknowledgements)
 
 ---
