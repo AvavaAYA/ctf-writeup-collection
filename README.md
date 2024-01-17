@@ -61,6 +61,12 @@
 
 - [attachments](https://drive.google.com/file/d/133XUhPJpuwfhOqt8IJH8x9J1760wWCfq/view?usp=sharing)
 
+## JingQiCTF 2023 (Jeopardy)
+
+### solo-rootcode
+
+- [attachments](https://drive.google.com/file/d/1p1eO0HjQaRYn321xAnPsL-dl3i66hUyA/view?usp=sharing)
+
 ## WMCTF 2023 (Jeopardy)
 
 ### blindless
