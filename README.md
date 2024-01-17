@@ -13,6 +13,8 @@
   - [TPCTF 2023 (Jeopardy)](#tpctf-2023-jeopardy)
     - [core](#core)
     - [core-revenge](#core-revenge)
+  - [JingQiCTF 2023 (Jeopardy)](#jingqictf-2023-jeopardy)
+    - [solo-rootcode](#solo-rootcode)
   - [WMCTF 2023 (Jeopardy)](#wmctf-2023-jeopardy)
     - [blindless](#blindless)
   - [HackerGame 2022 (Jeopardy)](#hackergame-2022-jeopardy)
