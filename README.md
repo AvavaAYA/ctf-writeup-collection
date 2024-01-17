@@ -44,6 +44,26 @@
 
 - [WriteUp](./QWB-Quals-2023/warmup23/)
 
+## TPCTF 2023 (Jeopardy)
+
+### core
+
+- [attachments](https://drive.google.com/file/d/1F-vr8dpZfiPZx1l2_8zEXnzQdGyqHvvb/view?usp=sharing)
+
+## WMCTF 2023 (Jeopardy)
+
+### blindless
+
+- [attachments](https://drive.google.com/file/d/1AF3JrobITUa0dj_bfVrcMBJXOQIJgM86/view?usp=sharing)
+
+- [WriteUp](https://eastxuelian.nebuu.la/Glibc/glibc-blindness/)
+
+## HackerGame 2022 (Jeopardy)
+
+### no_open
+
+- [attachments](https://drive.google.com/file/d/1IKKj57fliEOj396J2so5OiYrE614Leiq/view?usp=sharing)
+
 ---
 
 # Acknowledgements
