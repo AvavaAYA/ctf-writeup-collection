@@ -19,6 +19,8 @@
     - [blindless](#blindless)
   - [HackerGame 2022 (Jeopardy)](#hackergame-2022-jeopardy)
     - [no_open](#no_open)
+  - [Too Old Challenges](#too-old-challenges)
+    - [0CTF-2018-Baby-Kernel](#0ctf-2018-baby-kernel)
 - [Acknowledgements](#acknowledgements)
 
 ---
@@ -59,15 +61,21 @@
 
 - [attachments](https://drive.google.com/file/d/1F-vr8dpZfiPZx1l2_8zEXnzQdGyqHvvb/view?usp=sharing)
 
+- [WriteUp](https://eastxuelian.nebuu.la/Kernel/Kernel-How2Kernel-0x00-Foundation/)
+
 ### core-revenge
 
 - [attachments](https://drive.google.com/file/d/133XUhPJpuwfhOqt8IJH8x9J1760wWCfq/view?usp=sharing)
+
+- [WriteUp](https://eastxuelian.nebuu.la/Kernel/Kernel-How2Kernel-0x00-Foundation/)
 
 ## JingQiCTF 2023 (Jeopardy)
 
 ### solo-rootcode
 
 - [attachments](https://drive.google.com/file/d/1p1eO0HjQaRYn321xAnPsL-dl3i66hUyA/view?usp=sharing)
+
+- [WriteUp](https://eastxuelian.nebuu.la/Kernel/Kernel-How2Kernel-0x00-Foundation/)
 
 ## WMCTF 2023 (Jeopardy)
 
@@ -82,6 +90,14 @@
 ### no_open
 
 - [attachments](https://drive.google.com/file/d/1IKKj57fliEOj396J2so5OiYrE614Leiq/view?usp=sharing)
+
+- [WriteUp](https://eastxuelian.nebuu.la/Kernel/Kernel-How2Kernel-0x00-Foundation/)
+
+## Too Old Challenges
+
+### 0CTF-2018-Baby-Kernel
+
+- [attachments](https://drive.google.com/file/d/17tX8QUeTcbUlQRhpNtsUIh5Wxb0qfws0/view?usp=sharing)
 
 ---
 
