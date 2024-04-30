@@ -1,0 +1,61 @@
+#!/bin/sh
+
+export PS1='\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+[ -d /dev ] || mkdir -m 0755 /dev
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
+[ -d /run ] || mkdir /run
+[ -d /etc ] || mkdir /etc
+
+echo 'root:x:0:0:root:/root:/bin/sh' >/etc/passwd
+echo 'ctf:x:1000:1000:ctf:/home/ctf:/bin/sh' >>/etc/passwd
+echo 'root:x:0:' >/etc/group
+echo 'ctf:x:1000:' >>/etc/group
+
+chmod 644 /etc/passwd
+chmod 644 /etc/group
+
+chown -R root:root /
+chmod 700 -R /root
+chmod 700 -R /firewall.ko
+chown ctf:ctf /home/ctf
+chmod 777 /home/ctf
+chmod 755 /dev
+
+mount -t proc -o nodev,noexec,nosuid proc /proc
+mount -t sysfs -o nodev,noexec,nosuid sysfs /sys
+mount -t devtmpfs -o nosuid,mode=0755 udev /dev
+
+mkdir -p /dev/pts
+mkdir -p /var/lock
+mount -t devpts -o noexec,nosuid,gid=5,mode=0620 devpts /dev/pts || true
+
+ln -sf /proc/mounts /etc/mtab
+
+cat /proc/kallsyms >/tmp/kallsyms
+
+echo 0 >/proc/sys/kernel/kptr_restrict
+echo 1 >/proc/sys/kernel/dmesg_restrict
+echo 1 >/proc/sys/kernel/perf_event_paranoid
+
+FLAG=$(head -n 100 /dev/urandom | sha256sum | awk '{printf $1}')
+mv /root/temp /root/$FLAG
+chmod 0400 /root/$FLAG
+
+insmod firewall.ko
+chmod 666 /dev/firewall
+
+ifconfig lo up
+ifconfig eth0 up
+ifconfig eth0 10.10.10.1 netmask 255.255.255.0
+
+cd /exp
+
+setsid cttyhack setuidgid 0000 sh
+
+umount /proc
+umount /sys
+
+poweroff -d 1 -n -f

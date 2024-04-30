@@ -1,0 +1,23 @@
+#!/bin/sh
+case "$1" in
+  start)
+	printf "Starting d3_trusted_core service: "
+	/usr/bin/optee_d3_trusted_core daemon /dev/null 2>&1 &
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	printf "Stopping d3_trusted_core service: "
+	kill -9 `cat /var/run/optee_d3_trusted_core.pid`
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

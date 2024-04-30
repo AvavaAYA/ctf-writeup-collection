@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView android:textSize="@dimen/common_textsize_24" android:id="@id/key" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="20.0dip" android:text="D2036445ADCGF12W7" />
+    <EditText android:id="@id/pwd_text" android:layout_width="200.0dip" android:layout_height="50.0dip" android:hint="请输入密码" android:maxLines="1" android:inputType="textPassword" android:imeOptions="actionDone" />
+    <Button android:id="@id/enter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="进入" />
+</LinearLayout>

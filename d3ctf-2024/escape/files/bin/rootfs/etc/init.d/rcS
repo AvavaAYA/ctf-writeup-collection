@@ -1,0 +1,6 @@
+#!/bin/sh
+mount -t proc none /proc
+mount -t sys none /sys
+/bin/mount -n -t sysfs none /sys
+/bin/mount -t ramfs none /dev
+/sbin/mdev -s

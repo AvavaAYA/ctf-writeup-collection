@@ -1,0 +1,742 @@
+Wireshark SSL debug log 
+
+GnuTLS version:    3.6.15
+Libgcrypt version: 1.8.7
+
+
+dissect_dtls enter frame #14 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #16 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #17 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #19 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #20 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #22 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #23 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #24 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #25 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #26 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #27 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #28 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #14 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+decrypt_dtls_record: no session key
+Calculating hash with offset 269 6
+Calculating hash with offset 0 3
+Calculating hash with offset 270 3
+Calculating hash with offset 0 245
+ssl_dissect_hnd_hello_common found CLIENT RANDOM -> state 0x01
+
+dissect_dtls enter frame #15 (first time)
+packet_from_server: is from server - TRUE
+ssl_try_set_version found version 0xFEFD -> state 0x91
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+decrypt_dtls_record: no session key
+Calculating hash with offset 13 82
+ssl_try_set_version found version 0xFEFD -> state 0x91
+ssl_dissect_hnd_hello_common found SERVER RANDOM -> state 0x93
+ssl_set_cipher found CIPHER 0xC02C TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 -> state 0x97
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+decrypt_dtls_record: no session key
+Calculating hash with offset 269 6
+Calculating hash with offset 0 3
+Calculating hash with offset 270 3
+Calculating hash with offset 0 352
+ssl_find_private_key_by_pubkey: Not a RSA public key - ignoring.
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+decrypt_dtls_record: no session key
+Calculating hash with offset 510 122
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+decrypt_dtls_record: no session key
+Calculating hash with offset 645 60
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+decrypt_dtls_record: no session key
+Calculating hash with offset 718 12
+
+dissect_dtls enter frame #16 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+decrypt_dtls_record: no session key
+Calculating hash with offset 269 6
+Calculating hash with offset 0 3
+Calculating hash with offset 270 3
+Calculating hash with offset 0 350
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+decrypt_dtls_record: no session key
+Calculating hash with offset 413 45
+trying to use TLS keylog in /Users/error404/Desktop/CTF_question/2022WIDC/简单流量分析1/xiaohua.s19
+ssl_load_keyfile failed to open SSL keylog
+ssl_generate_pre_master_secret: found SSL_HND_CLIENT_KEY_EXCHG, state 197
+ssl_restore_master_key can't find pre-master secret by Unencrypted pre-master secret
+ssl_restore_master_key can't find pre-master secret by Encrypted pre-master secret
+dissect_dtls_handshake can't generate pre master secret
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+decrypt_dtls_record: no session key
+trying to use TLS keylog in /Users/error404/Desktop/CTF_question/2022WIDC/简单流量分析1/xiaohua.s19
+ssl_load_keyfile failed to open SSL keylog
+ssl_finalize_decryption state = 0x197
+ssl_restore_master_key can't restore master secret using an empty Session ID
+ssl_restore_master_key can't find master secret by Client Random
+  Cannot find master secret
+ssl_change_cipher CLIENT (No decoder found - retransmission?)
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #17 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+decrypt_dtls_record: no session key
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+decrypt_dtls_record: no session key
+Calculating hash with offset 525 6
+Calculating hash with offset 0 3
+Calculating hash with offset 526 3
+Calculating hash with offset 0 534
+ssl_save_master_key not saving empty (pre-)master secret for Session Ticket!
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+decrypt_dtls_record: no session key
+ssl_dissect_change_cipher_spec Not using Session resumption
+trying to use TLS keylog in /Users/error404/Desktop/CTF_question/2022WIDC/简单流量分析1/xiaohua.s19
+ssl_load_keyfile failed to open SSL keylog
+ssl_finalize_decryption state = 0x597
+ssl_restore_master_key can't restore master secret using an empty Session ID
+ssl_restore_master_key can't find master secret by Client Random
+  Cannot find master secret
+ssl_change_cipher SERVER (No decoder found - retransmission?)
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #18 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #19 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #20 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #21 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #22 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #23 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #24 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #25 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #26 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #27 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #28 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #29 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #30 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #31 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #32 (first time)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #33 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #40 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 9
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #41 (first time)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 21 epoch 1 seq 10
+decrypt_dtls_record: no session key
+
+dissect_dtls enter frame #14 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #16 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #17 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #19 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #20 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #22 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #23 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #24 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #25 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #26 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #27 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #28 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #32 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #33 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #40 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 9
+
+dissect_dtls enter frame #41 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 21 epoch 1 seq 10
+
+dissect_dtls enter frame #14 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #16 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #17 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #19 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #20 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #22 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #23 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #24 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #25 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #26 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #27 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #28 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #14 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #16 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #17 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #19 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #20 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #22 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #23 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #24 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #25 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #26 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #27 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #28 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #14 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+
+dissect_dtls enter frame #15 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 0
+dissect_dtls_record: content_type 22 epoch 0 seq 1
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+
+dissect_dtls enter frame #16 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 22 epoch 0 seq 2
+dissect_dtls_record: content_type 22 epoch 0 seq 3
+dissect_dtls_record: content_type 22 epoch 0 seq 4
+dissect_dtls_record: content_type 22 epoch 0 seq 5
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 20 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #17 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 22 epoch 0 seq 6
+dissect_dtls_record: content_type 22 epoch 0 seq 7
+dissect_dtls_record: content_type 22 epoch 0 seq 8
+dissect_dtls_record: content_type 20 epoch 0 seq 9
+dissect_dtls_record: content_type 22 epoch 1 seq 0
+
+dissect_dtls enter frame #18 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #19 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 1
+
+dissect_dtls enter frame #20 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #21 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 2
+
+dissect_dtls enter frame #22 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #23 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 3
+
+dissect_dtls enter frame #24 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #25 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 4
+
+dissect_dtls enter frame #26 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #27 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 5
+
+dissect_dtls enter frame #28 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #32 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #32 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #33 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #33 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #40 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 9
+
+dissect_dtls enter frame #40 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 9
+
+dissect_dtls enter frame #41 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 21 epoch 1 seq 10
+
+dissect_dtls enter frame #41 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 21 epoch 1 seq 10
+
+dissect_dtls enter frame #41 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 21 epoch 1 seq 10
+
+dissect_dtls enter frame #40 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 9
+
+dissect_dtls enter frame #33 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #32 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 8
+
+dissect_dtls enter frame #31 (already visited)
+packet_from_server: is from server - FALSE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #30 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 7
+
+dissect_dtls enter frame #29 (already visited)
+packet_from_server: is from server - TRUE
+dissect_dtls_record: content_type 23 epoch 1 seq 6

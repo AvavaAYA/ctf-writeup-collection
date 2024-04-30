@@ -1,0 +1,20 @@
+#!/bin/sh
+
+mkdir /tmp
+mount -t tmpfs none /tmp
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev
+
+exec 0</dev/console
+exec 1>/dev/console
+exec 2>/dev/console
+
+mdev -s
+
+echo -e "\nBoot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
+echo "Interactive mode\n"
+setsid /bin/cttyhack setuidgid 0 /bin/sh
+umount /proc
+umount /sys
+poweroff -d 0 -f

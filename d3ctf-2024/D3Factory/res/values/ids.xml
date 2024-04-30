@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="key" />
+    <item type="id" name="pwd_text" />
+    <item type="id" name="enter" />
+    <item type="id" name="flag1" />
+    <item type="id" name="tcpdump" />
+    <item type="id" name="TcpDump" />
+</resources>

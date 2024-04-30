@@ -1,0 +1,501 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Trusted Site</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap5 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+        <!-- jQuery -->
+        <script src="https://cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        
+        <!-- React -->
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <style>
+            body {
+                background-color: #87CEFA;
+                background-size: cover;
+                background-attachment: fixed;
+                font-family: Verdana, helvetica, arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="index-page"></div>
+        </div>
+        <script type="text/babel">
+            class IndexPage extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {is_login: 0};
+                    this.user_info = null;
+                    this.user_info_list = null;
+                    this.user_items = null;
+                    this.old_password = "";
+                    this.new_password = "";
+                    this.tick_actions();
+                    this.handleChangePassword = this.handleChangePassword.bind(this);
+                    this.handleInputChange = this.handleInputChange.bind(this);
+                    this.handleLogout = this.handleLogout.bind(this);
+                    this.handleUserMan = this.handleUserMan.bind(this);
+                    this.handleJumpSecFS = this.handleJumpSecFS.bind(this);
+                }
+
+                handleChangePassword(event) {
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user/passwd", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Password changed!");
+                                    window.location.href = "/login.html";
+                                } else{
+                                    alert("Failed to change password");
+                                }
+                            } else{
+                                alert("Failed to change password");
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("old_password=" + this.old_password + "&new_password=" + this.new_password);   
+                }
+
+                handleLogout(event) {
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user/logout", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Logout success!");
+                                    window.location.href = "/index.html";
+                                } else{
+                                    window.location.href = "/index.html";
+                                }
+                            } else{
+                                window.location.href = "/index.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();                     
+                }
+
+                handleUserMan(action, username, event){
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/man/user/"+action, true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Success!");
+                                    this.tick_actions();
+                                } else{
+                                    alert("Failed!");
+                                }
+                            } else{
+                                alert("Failed!");
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("username="+username);                  
+                }
+
+                handleJumpSecFS(event) {
+                    event.preventDefault();
+
+                    window.location.href = "/secfs.html";
+                }
+
+                handleInputChange(target, event) {
+                    switch(target){
+                        case "old_password":
+                            this.old_password = event.target.value;
+                            break;
+                        case "new_password":
+                            this.new_password = event.target.value;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                componentDidMount() {
+                    this.timerID = setInterval(
+                        () => this.tick(),
+                        1500
+                    );
+                }
+                
+                componentWillUnmount() {
+                    clearInterval(this.timerID);
+                }
+                
+                tick() {
+                    this.tick_actions();
+                }
+
+                tick_actions(){
+                    this.update_user_info();
+                    this.update_user_list();
+                    this.render();
+                }
+
+                update_user_info(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                if(json.code == 0){
+                                    this.setState({is_login: 1});
+                                    this.user_info = json.data;
+                                    //console.log(this.user_info);
+                                    document.getElementById("profile-name").innerHTML = this.user_info.name;
+                                    document.getElementById("profile-uid").innerHTML = this.user_info.uid;
+                                    document.getElementById("profile-status").innerHTML = this.user_info.status;
+                                    document.getElementById("profile-type").innerHTML = this.user_info.type;
+                                    document.getElementById("profile-face-id").innerHTML = this.user_info.face_id;
+                                } else{
+                                    console.log("session expired");
+                                    this.setState({is_login: 0});
+                                    window.location.href = "/login.html";
+                                }
+                            } else{
+                                this.setState({is_login: 0});
+                                window.location.href = "/login.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();
+                }
+
+                update_user_list(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user/list", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    this.user_info_list = json.data;
+                                    this.user_info_list.sort(function(a, b){
+                                        return a.uid - b.uid;
+                                    });
+                                    this.user_items = this.user_info_list.map((usr, idx) =>
+                                        <tr key={usr.uid}>
+                                            <td style={{verticalAlign: "middle", color: "gray"}}>{idx}</td>
+                                            <td style={{verticalAlign: "middle"}}>{usr.uid}</td>
+                                            <td style={{verticalAlign: "middle"}}>{usr.name}</td>
+                                            <td style={{verticalAlign: "middle"}}>{usr.type}</td>
+                                            <td style={{
+                                                    color: {
+                                                        "normal": "green",
+                                                        "disabled": "red"
+                                                    }[usr.status],
+                                                    verticalAlign: "middle"
+                                            }}>{usr.status}</td>
+                                            <td style={{
+                                                    color: {
+                                                        "enabled": "green",
+                                                        "disabled": "red"
+                                                    }[usr.face_id],
+                                                    verticalAlign: "middle"
+                                            }}>{usr.face_id}</td>
+                                            <td style={{verticalAlign: "middle"}}>
+                                                <a className={usr.status == "disabled" ? (
+                                                    "btn btn-outline-primary"
+                                                ) : (
+                                                    "btn btn-outline-primary disabled"
+                                                )}                
+                                                onClick={this.handleUserMan.bind(this, "enable", usr.name)}>enable</a>
+                                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                                <a className={usr.status == "normal" ? (
+                                                    "btn btn-outline-primary"
+                                                ) : (
+                                                    "btn btn-outline-primary disabled"
+                                                )}
+                                                onClick={this.handleUserMan.bind(this, "disable", usr.name)}>disable</a>
+                                                &nbsp;&nbsp;|&nbsp;&nbsp;
+                                                <a className="btn btn-outline-primary"
+                                                onClick={this.handleUserMan.bind(this, "reset", usr.name)}>reset</a>
+                                            </td>
+                                        </tr>
+                                    );
+                                } else{
+                                    console.log("session expired");
+                                }
+                            } else{
+                                console.log("Failed to get user list");
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();            
+                }
+
+                check_login(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                //console.log(xhr.responseText);
+                                var json = JSON.parse(xhr.responseText);
+                                if(json.code == 0){
+                                    this.setState({is_login: 1});
+                                } else{
+                                    console.log("session expired");
+                                    this.setState({is_login: 0});
+                                    window.location.href = "/login.html";
+                                }
+                            } else{
+                                this.setState({is_login: 0});
+                                window.location.href = "/login.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();
+                }
+                
+                render() {
+                    if(this.state.is_login == 0){
+                        return(
+<div className="row" style={{marginTop: "30%"}}>
+    <div className="col-sm-6 offset-sm-3 col-md-6 offset-md-3" >
+        <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+            <div className="card-header"><h5>Trusted Site</h5></div>                             
+            <div className="card-body">Loading...</div>
+        </div>
+    </div>
+</div>
+                        );
+                    } else{
+                        return(
+<div className="row" style={{marginTop: "5%"}}> 
+<div className="col-sm-10 offset-sm-1 col-md-10 offset-md-1" >                       
+<div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+    <div className="card-header"><h5>Trusted Site (Setting)</h5></div>                             
+    <div className="card-body">
+
+
+        <div className="d-flex align-items-start">
+        <div className="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            {/*<button className="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>*/}
+            <button className="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true">
+                Profile
+            </button>
+            <button className="nav-link" id="v-pills-users-tab" data-bs-toggle="pill" data-bs-target="#v-pills-users" type="button" role="tab" aria-controls="v-pills-users" aria-selected="false">
+                Users
+            </button>
+            <button className="nav-link" id="v-pills-secfs-tab" data-bs-toggle="pill" data-bs-target="#v-pills-secfs" type="button" role="tab" aria-controls="v-pills-secfs" aria-selected="false">
+                Secure FS
+            </button>
+        </div>
+        <div className="tab-content flex-grow-1" id="v-pills-tabContent">
+            {/*<div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabIndex="0">...</div>*/}
+            <div className="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabIndex="0">
+                <div className="row justify-content-around">
+                    <hr style={{color: "#0D6EFD", marginTop: "1%"}} width="300" size="1" />
+                </div>
+                <div className="row justify-content-around">
+                    <div className="col-2">
+                        <h6><b>Name:&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" id="profile-name"></p>
+                    </div>                    
+                    <div className="col-2">
+                        <h6><b>UID:&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" id="profile-uid"></p>
+                    </div>
+                    <div className="col-2">
+                        <h6><b>Status:&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" id="profile-status"></p>
+                    </div>      
+                </div>
+                <div className="row justify-content-around">              
+                    <div className="col-2">
+                        <h6><b>Type:&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" id="profile-type"></p>
+                    </div>
+                    <div className="col-2">
+                        <h6><b>Face ID:&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" id="profile-face-id"></p>
+                    </div>
+                    <div className="col-2">
+                        <h6><b>&nbsp;</b></h6>
+                    </div>
+                    <div className="col-2">
+                        <p className="text-start" >&nbsp;</p>
+                    </div>                    
+                </div>
+                <div className="row justify-content-around">
+                    <hr style={{color: "#0D6EFD", marginTop: "1%"}} width="300" size="1" />
+                </div>
+                <div className="row justify-content-around">
+                    <div className="col-6">
+                        <div className="card bg-light text-dark">
+                            <div className="card-body">
+                                <small>Reset your password:</small>
+                                <div className="form-floating mb-3 mt-3">
+                                    <input type="password" className="form-control" id="oldpwd" placeholder="Old Password" 
+                                    onChange={this.handleInputChange.bind(this, "old_password")} maxLength="128" />
+                                    <label htmlFor="comment">Old Password</label>
+                                </div>
+                                <div className="form-floating mb-3 mt-3">
+                                    <input type="password" className="form-control" id="newpwd" placeholder="New Password" 
+                                    onChange={this.handleInputChange.bind(this, "new_password")} maxLength="128" />
+                                    <label htmlFor="comment">New Password</label>
+                                </div>
+                                <div className="d-grid">
+                                    <button type="button" className="btn btn-primary btn-block"
+                                    onClick={this.handleChangePassword.bind(this)} id="profile-passwd-btn">
+                                        change passowrd
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        &nbsp;
+                    </div>
+                </div>
+                <div className="row justify-content-around">
+                    <hr style={{color: "#0D6EFD", marginTop: "2%"}} width="300" size="1" />
+                </div>
+                <div className="row justify-content-around">
+                    <div className="col-6">
+                        <div className="card bg-light text-dark">
+                            <div className="card-body">
+                                <small>Log out of your session:</small>
+                                <div className="d-grid">
+                                    <button type="button" className="btn btn-primary btn-block"
+                                    onClick={this.handleLogout.bind(this)}  id="profile-logout-btn">
+                                        logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        &nbsp;
+                    </div>                
+                </div>
+            </div>
+            <div className="tab-pane fade" id="v-pills-users" role="tabpanel" aria-labelledby="v-pills-users-tab" tabIndex="0">
+                <div className="row justify-content-around">
+                    <hr style={{color: "#0D6EFD", marginTop: "1%"}} width="300" size="1" />
+                </div>
+                <div className="row justify-content-around">
+                    <div className="col-12">
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>UID</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Face ID</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {this.user_items}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="tab-pane fade" id="v-pills-secfs" role="tabpanel" aria-labelledby="v-pills-secfs-tab" tabIndex="0">
+
+
+                <div className="row">
+                    <div className="row justify-content-around">
+                        <hr style={{color: "#0D6EFD", marginTop: "1%"}} width="300" size="1" />
+                    </div>
+                    <div className="row justify-content-around">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <button type="button" className="btn btn-success"
+                                    onClick={this.handleJumpSecFS.bind(this)}  id="jump-secfs-btn">
+                                        Seccure File System Explorer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+                        );
+                    }
+                }
+            }
+            ReactDOM.render(
+                <IndexPage />,
+                document.getElementById('index-page')
+            );
+        </script>
+    </body>
+</html>

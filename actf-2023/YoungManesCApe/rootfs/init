@@ -1,0 +1,11 @@
+#!/bin/sh
+/bin/mount -t devtmpfs devtmpfs /dev
+/bin/mount -t proc none /proc
+echo 2 > /proc/sys/kernel/kptr_restrict
+echo 1 > /proc/sys/kernel/dmesg_restrict
+
+echo "[ Young Man esCApe - ACTF 2023 ]"
+/bin/sandbox
+
+umount /proc
+poweroff -d 0 -f

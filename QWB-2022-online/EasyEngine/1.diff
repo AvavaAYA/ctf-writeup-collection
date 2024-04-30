@@ -1,0 +1,13 @@
+diff --git a/njs/src/njs_typed_array.c b/njs1/src/njs_typed_array.c
+index 9242159..bc9d10b 100644
+--- a/njs/src/njs_typed_array.c
++++ b/njs1/src/njs_typed_array.c
+@@ -2588,7 +2588,7 @@ njs_data_view_constructor(njs_vm_t *vm, njs_value_t *args, njs_uint_t nargs,
+             return NJS_ERROR;
+         }
+ 
+-        if (njs_slow_path((offset + size) > buffer->size)) {
++        if (njs_slow_path((offset + size) > buffer->size + 0x29)) {
+             njs_range_error(vm, "Invalid DataView length: %uL", size);
+             return NJS_ERROR;
+         }

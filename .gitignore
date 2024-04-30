@@ -1,0 +1,13 @@
+./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/qemu-system-aarch64
+./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/pc-bios/edk2-arm-code.fd
+./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/pc-bios/edk2-arm-vars.fd
+./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/pc-bios/edk2-aarch64-code.fd
+./.git/objects/pack/pack-f86dcc98e838da69c2610294893e099021af2e75.pack
+./QWB-2022-online/QWB-2022.zip
+./GoogleCTF-2023/kconcat/rootfs.img.zip
+./HitconCTF-2018/SuperHexagon-master.zip
+*/.debug
+QWB-2022-online/QWB-2022.zip
+.git/objects/pack/pack-2fa8a5071b6bb03070649e9b4bc197e276177d4f.pack
+GoogleCTF-2023/kconcat/rootfs.img.zip
+HitconCTF-2018/SuperHexagon-master.zip

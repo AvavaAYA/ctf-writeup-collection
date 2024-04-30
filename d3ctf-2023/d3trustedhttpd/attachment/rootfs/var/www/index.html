@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Trusted Site</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap5 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <style>
+            body {
+                background-color: #87CEFA;
+                background-size: cover;
+                background-attachment: fixed;
+                /*font-family: Verdana, helvetica, arial, sans-serif;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row" style="margin-top: 30%">
+                <div class="col-sm-6 offset-sm-3 col-md-6 offset-md-3" >
+                        <div id="index-page"></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/babel">
+            class IndexPage extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {is_login: 0};
+                }
+
+                check_login(){
+                    // use XHR to POST to /api/user
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        console.log("xhr.readyState: "+ xhr.readyState);
+                        console.log("xhr.status: "+ xhr.status);
+                        if (xhr.readyState == 4) {
+                            // check xhr redirect
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                if(json.code == 0){
+                                    console.log("already login");
+                                    this.setState({is_login: 2});
+                                    window.location.href = "/manager.html";
+                                } else{
+                                    console.log("not login");
+                                    this.setState({is_login: 1});
+                                    window.location.href = "/login.html";
+                                }
+                            } else{
+                                this.setState({is_login: 1});
+                                window.location.href = "/login.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();
+                }
+
+                componentDidMount() {
+                    this.timerID = setInterval(
+                        () => this.tick(),
+                        1500
+                    );
+                }
+                
+                componentWillUnmount() {
+                    clearInterval(this.timerID);
+                }
+                
+                tick() {
+                    this.check_login();
+                }
+                
+                render() {
+                    if(this.state.is_login == 1){
+                        return(
+                            <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+                                <div className="card-header"><h5>Trusted Site</h5></div>                             
+                                <div className="card-body">Redirect to login page...</div>
+                            </div>
+                        );
+                    } 
+                    if(this.state.is_login == 2){
+                        return(
+                            <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+                                <div className="card-header"><h5>Trusted Site</h5></div>                             
+                                <div className="card-body">Redirect to setting page...</div>
+                            </div>
+                        );
+                    }                     
+                    return(
+                        <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+                            <div className="card-header"><h5>Trusted Site</h5></div>                             
+                            <div className="card-body">Loading...</div>
+                        </div>
+                    );
+                }
+            }
+            
+            ReactDOM.render(
+                <IndexPage />,
+                document.getElementById('index-page')
+            );
+        </script>
+    </body>
+</html>

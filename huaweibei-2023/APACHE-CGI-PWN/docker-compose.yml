@@ -1,0 +1,8 @@
+version: "2"
+services:
+  cgi:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "12000:80"
+      - "6666:6666"
