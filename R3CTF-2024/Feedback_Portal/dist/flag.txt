@@ -1,0 +1,1 @@
+R3CTF{FAKE_FLAG}

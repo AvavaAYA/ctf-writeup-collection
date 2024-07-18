@@ -1,0 +1,8 @@
+version: "3"
+services: 
+  httpd2: 
+    build: .
+    image: httpd2:latest
+    ports: 
+      - "8888"
+      - "80"

@@ -1,0 +1,1 @@
+docker run -d -p "0.0.0.0:pub_port1:80" -p "0.0.0.0:pub_port2:8888" -h "httpd2" --name="httpd2" httpd2 
