@@ -27,3 +27,6 @@
 |                                                                                                         |                 [d3note](d3ctf/d3note/)                  |       #int-overflow       |
 |                                                                                                         |       [write_flag_where](d3ctf/write_flag_where/)        |           #misc           |
 |                                                                                                         |                 [d3lgfs](d3ctf/d3lgfs/)                  |       #windows #LPE       |
+| [北辰计划](https://eastxuelian.nebuu.la/bc-ctf-2024) | [pwn1](./Plan-BC-2024/pwn1) | small bof |
+
+---
