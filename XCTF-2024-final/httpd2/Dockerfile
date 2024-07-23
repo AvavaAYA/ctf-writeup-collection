@@ -41,6 +41,8 @@ RUN chown -R root:ctf /home/ctf && \
     chown -R root:ctf /var/www/ && \
     chmod 555 /var/www/
 
+RUN apt-get install -y gdbserver
+
 #CMD service apache2 start
 CMD ["apachectl", "-D", "FOREGROUND"]
 
