@@ -26,11 +26,13 @@ dest[v4] = 0;
 ```
 
 <details>
-<summary>**调试**</summary>
+<summary>调试summary>
 
 这种题目的调试我一般使用 gdbserver，直接在 docker 里面安装，替换 main.cgi 内容为 `gdbserver 0.0.0.0:1234 ./real.cgi` 即可调试，相关脚本见 [initgdb.sh](./bin/cgi-bin/initgdb.sh)。
 
 </details>
+
+接下来进入调试
 
 ## Exploitation
 
