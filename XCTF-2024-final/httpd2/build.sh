@@ -1,1 +1,1 @@
-docker build -t "httpd2" .
+docker build --network host -t "httpd2" .
