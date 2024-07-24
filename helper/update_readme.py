@@ -144,6 +144,7 @@ def update_main_readme(new_entries):
     print("================Updating README================")
     print(updated_table_content)
     print("================Updating README================")
+    print("Success.")
 
     with open(main_readme, "w") as f:
         f.write(updated_content)
@@ -154,6 +155,7 @@ def update_main_readme(new_entries):
 def main():
     new_readmes = get_new_readmes()
     if not new_readmes:
+        print("Nothing new, exiting..")
         return
 
     new_entries = [extract_info(readme) for readme in new_readmes]
