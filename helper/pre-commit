@@ -18,7 +18,7 @@ def get_git_root():
 
 def run_update_script():
     try:
-        result = subprocess.run(["python3", "update_readme.py"], check=True)
+        result = subprocess.run(["python3", "helper/update_readme.py"], check=True)
         if result.returncode == 0:
             pass
         else:
@@ -35,5 +35,5 @@ if git_root:
 else:
     print("Not a git repository.")
 
-print("STEP 1 - Update README.md")
+print("STEP 1 - Updating README.md")
 run_update_script()
