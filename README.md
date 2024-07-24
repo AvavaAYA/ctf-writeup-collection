@@ -29,5 +29,6 @@
 | 👆 | [d3lgfs](d3ctf/d3lgfs/) | windows, LPE |
 | [北辰计划](https://eastxuelian.nebuu.la/bc-ctf-2024) | [pwn1](./Plan-BC-2024/pwn1) | small bof |
 | 👆 | [pwn2](./Plan-BC-2024/pwn2) | strfmt, close stdout |
+| [XCTF 2024 Final](./XCTF-2024-final) | [httpd2](./XCTF-2024-final/httpd2) | dlresolve, spary |
 
 ---
