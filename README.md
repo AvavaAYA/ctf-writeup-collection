@@ -1,6 +1,11 @@
 # ctf-writeup-collection
 
->     eastXueLian's reservoir of CTF puzzles.
+> eastXueLian's reservoir of CTF puzzles.
+
+I have pre-commit hooks for this readme:
+
+- [update-readme](./helper/update_readme.py)
+- [pre-commit](./helper/pre-commit)
 
 ## Challenges With Write-Up
 
