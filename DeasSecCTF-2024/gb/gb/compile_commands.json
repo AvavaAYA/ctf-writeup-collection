@@ -1,0 +1,17 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-g",
+      "-Wall",
+      "-I./include/",
+      "-o",
+      "build/emulator.o",
+      "src/emulator.c"
+    ],
+    "directory": "/home/gold3nboy/GB_emu",
+    "file": "/home/gold3nboy/GB_emu/src/emulator.c",
+    "output": "/home/gold3nboy/GB_emu/build/emulator.o"
+  }
+]

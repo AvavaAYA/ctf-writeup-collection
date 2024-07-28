@@ -35,5 +35,8 @@ I have pre-commit hooks for this readme:
 | [北辰计划](https://eastxuelian.nebuu.la/bc-ctf-2024) | [pwn1](./Plan-BC-2024/pwn1) | small bof |
 | 👆 | [pwn2](./Plan-BC-2024/pwn2) | strfmt, close stdout |
 | [XCTF 2024 Final](./XCTF-2024-final) | [httpd2](./XCTF-2024-final/httpd2) | dlresolve, spary |
+| [DeadSec CTF 2024](https://deadsec.ctf.ae/) | [User management](./DeasSecCTF-2024/UserManagement) | strfmt |
+| 👆 | [shadow](./DeasSecCTF-2024/shadow) | heap |
+| 👆 | [Super CPP Calculator](./DeasSecCTF-2024/checkin) | IEEE 754 |
 
 ---
