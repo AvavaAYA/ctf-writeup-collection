@@ -39,5 +39,8 @@ I have pre-commit hooks for this readme:
 | 👆 | [gb](./DeasSecCTF-2024/gb) | VM pwn |
 | 👆 | [shadow](./DeasSecCTF-2024/shadow) | heap |
 | 👆 | [Super CPP Calculator](./DeasSecCTF-2024/checkin) | IEEE 754 |
+| [TFC CTF 2024](https://ctf.thefewchosen.com) | [GUARD-THE-BYPASS](./TFCCTF-2024/GUARD-THE-BYPASS) | tls, canary bypass |
+| 👆 | [VSPM](./TFCCTF-2024/VSPM) | double free |
+| 👆 | [MCBACK2DABASICS](./TFCCTF-2024/MCBACK2DABASICS) | double free, scanf |
 
 ---
