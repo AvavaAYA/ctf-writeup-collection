@@ -1,0 +1,2 @@
+rm /sbin/poweroff
+exit

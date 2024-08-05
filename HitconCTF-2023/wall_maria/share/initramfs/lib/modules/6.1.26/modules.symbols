@@ -1,0 +1,6 @@
+# Aliases for symbols, used by symbol_request().
+alias symbol:hwrng_msleep rng_core
+alias symbol:hwrng_register rng_core
+alias symbol:hwrng_unregister rng_core
+alias symbol:devm_hwrng_unregister rng_core
+alias symbol:devm_hwrng_register rng_core

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView android:textSize="@dimen/common_textsize_24" android:id="@id/flag1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="20.0dip" android:text="d3ctf{yes_you_f1nd_b4ckdo0r}" />
+    <Button android:id="@id/tcpdump" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="open/close tcpdump" />
+</LinearLayout>

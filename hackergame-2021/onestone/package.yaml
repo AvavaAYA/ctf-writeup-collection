@@ -1,0 +1,16 @@
+name: haskell-pwn
+
+executables:
+  runme:
+    main: main.hs
+
+ghc-options:
+- -Wall
+- -Werror
+
+default-extensions: []
+
+dependencies:
+- base
+- optparse-applicative
+- vector

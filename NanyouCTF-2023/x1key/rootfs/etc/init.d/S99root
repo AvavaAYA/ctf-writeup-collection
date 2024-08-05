@@ -1,0 +1,13 @@
+#!/bin/sh
+
+adduser -h /home/ctf -D ctf
+echo "ctf:4796712a-31e3-481a-8f11-2c5fc72bee7b" | chpasswd
+
+chmod 700 /flag
+
+insmod /x1key.ko
+chmod 666 /dev/x1key
+
+sleep 120
+
+poweroff -d 0 -f

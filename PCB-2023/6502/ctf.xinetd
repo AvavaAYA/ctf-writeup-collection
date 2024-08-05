@@ -1,0 +1,14 @@
+service ctf
+{
+    disable       = no
+    type          = UNLISTED
+    wait          = no
+    # server        = gdbserver
+    # server_args   = 0.0.0.0:6677 /root/6502_proccessor
+    server        = /root/6502_proccessor
+    socket_type   = stream
+    protocol      = tcp
+    port          = 6677
+    flags         = REUSE
+    user          = root
+}

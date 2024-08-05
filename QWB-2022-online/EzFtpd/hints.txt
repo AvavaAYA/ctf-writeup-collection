@@ -1,0 +1,9 @@
+nc 121.40.196.158 28888
+
+附件下载 提取码（GAME）
+
+提示1：回头看看来时的路，UAF就在路上。
+
+提示2：“CWD -”跳过路径解析直接用全局变量赋值vwd
+
+提示3：删除last vwd再“CWD -”可造成UAF；“RETR”可控制申请的堆块大小构造largebin attack写dtor，最后exit即可get shell

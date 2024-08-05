@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Created-By: 1.8.0_362 (Private Build)
+
+Name: AndroidManifest.xml
+SHA-256-Digest: msbeI83ya/WYUcGPXzKy4riPnhGBUXxgUMt18wHGtxA=
+
+Name: res/layout/activity_auth.xml
+SHA-256-Digest: PaYxvLeWVb/YlCMf5VogGcwFHJZPvy+cNK1vzFwhb94=
+
+Name: res/layout/activity_factory.xml
+SHA-256-Digest: 5SeSSWvMeC7eX+mMCZJs9ifA4tRKohoaCaw0/ATqKBA=
+
+Name: res/layout/activity_tcpdump.xml
+SHA-256-Digest: hABs+06T2PxpQCmsckYHCn7pfsZ3efAnER0EDi9h1H4=
+
+Name: resources.arsc
+SHA-256-Digest: hK7//mNifA1iplp8mjKPidYl9qOa6XvdlO+dovhwbuU=
+

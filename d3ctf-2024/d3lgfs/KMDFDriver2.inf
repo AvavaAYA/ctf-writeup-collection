@@ -1,0 +1,80 @@
+;
+; KMDFDriver2.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System ; TODO: specify appropriate Class
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=KMDFDriver2.cat
+DriverVer = 04/26/2024,3.4.10.56
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+KMDFDriver2_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+KMDFDriver2.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%KMDFDriver2.DeviceDesc%=KMDFDriver2_Device, Root\KMDFDriver2 ; TODO: edit hw-id
+
+[KMDFDriver2_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+KMDFDriver2.sys
+
+;-------------- Service installation
+[KMDFDriver2_Device.NT.Services]
+AddService = KMDFDriver2,%SPSVCINST_ASSOCSERVICE%, KMDFDriver2_Service_Inst
+
+; -------------- KMDFDriver2 driver install sections
+[KMDFDriver2_Service_Inst]
+DisplayName    = %KMDFDriver2.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\KMDFDriver2.sys
+
+;
+;--- KMDFDriver2_Device Coinstaller installation ------
+;
+
+[KMDFDriver2_Device.NT.CoInstallers]
+AddReg=KMDFDriver2_Device_CoInstaller_AddReg
+CopyFiles=KMDFDriver2_Device_CoInstaller_CopyFiles
+
+[KMDFDriver2_Device_CoInstaller_AddReg]
+;
+
+
+[KMDFDriver2_Device_CoInstaller_CopyFiles]
+;
+
+
+[KMDFDriver2_Device.NT.Wdf]
+KmdfService =  KMDFDriver2, KMDFDriver2_wdfsect
+[KMDFDriver2_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "KMDFDriver2 Installation Disk"
+KMDFDriver2.DeviceDesc = "KMDFDriver2 Device"
+KMDFDriver2.SVCDESC = "KMDFDriver2 Service"

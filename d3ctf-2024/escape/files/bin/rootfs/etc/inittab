@@ -1,0 +1,6 @@
+::sysinit:/etc/init.d/rcS
+::askfirst:/bin/ash
+::ctrlaltdel:/sbin/reboot
+::shutdown:/sbin/swapoff -a
+::shutdown:/bin/umount -a -r
+::restart:/sbin/init

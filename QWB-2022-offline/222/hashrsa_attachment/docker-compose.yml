@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  hashrsa:
+    build: .
+    ports:
+      - "10111:10111"
+    restart: always

@@ -1,0 +1,25 @@
+#!/bin/sh
+case "$1" in
+  start)
+	printf "Setup flag: "
+	chmod 400 /flag.txt
+	rm -f /var/www/flag.txt
+	ln /flag.txt /var/www/flag.txt
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	printf "Remove flag: "
+	rm -f /var/www/flag.txt
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

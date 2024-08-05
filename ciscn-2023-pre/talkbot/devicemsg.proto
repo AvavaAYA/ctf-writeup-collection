@@ -1,0 +1,7 @@
+syntax = "proto2";
+message Devicemsg {
+  required sint64 actionid=1; 
+  required sint64 msgidx=2; 
+  required sint64 msgsize=3; 
+  required string msgcontent=4; 
+}

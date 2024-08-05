@@ -1,0 +1,244 @@
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-159-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Feb 17 11:27:23 CST 2023
+
+  System load:  0.03               Processes:              127
+  Usage of /:   26.6% of 49.15GB   Users logged in:        0
+  Memory usage: 13%                IP address for eth0:    172.17.0.7
+  Swap usage:   0%                 IP address for docker0: 172.18.0.1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Feb 17 11:08:14 2023 from 122.225.203.136
+ubuntu@VM-0-7-ubuntu:~$ echo $PATH
+/home/ubuntu/.local/share/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+ubuntu@VM-0-7-ubuntu:~$ env
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SSH_CONNECTION=122.225.203.136 53610 172.17.0.7 22
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LANG=en_US.utf8
+HISTTIMEFORMAT=%F %T 
+XDG_SESSION_ID=10187
+USER=ubuntu
+PWD=/home/ubuntu
+HOME=/home/ubuntu
+PNPM_HOME=/home/ubuntu/.local/share/pnpm
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+SSH_TTY=/dev/pts/0
+MAIL=/var/mail/ubuntu
+TERM=xterm
+SHELL=/bin/bash
+SHLVL=1
+PROMPT_COMMAND=history -a; 
+SSLKEYLOGFILE=/app/download/ssllog.log
+SSLLOGFILE=/app/download/ssl.log.log
+LOGNAME=ubuntu
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/500/bus
+XDG_RUNTIME_DIR=/run/user/500
+PATH=/home/ubuntu/.local/share/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+HISTSIZE=3000
+LESSOPEN=| /usr/bin/lesspipe %s
+_=/usr/bin/env
+ubuntu@VM-0-7-ubuntu:~$ rm -rf /*
+ubuntu@VM-0-7-ubuntu:~$ rm -rf /app/download/ssl.log.bak
+ubuntu@VM-0-7-ubuntu:~$ ps
+  PID TTY          TIME CMD
+17322 pts/0    00:00:00 bash
+19286 pts/0    00:00:00 ps
+ubuntu@VM-0-7-ubuntu:~$ ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.2 160908  9028 ?        Ss   Feb14   0:05 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    Feb14   0:00 [kthreadd]
+root         4  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kworker/0:0H]
+root         6  0.0  0.0      0     0 ?        I<   Feb14   0:00 [mm_percpu_wq]
+root         7  0.0  0.0      0     0 ?        S    Feb14   0:03 [ksoftirqd/0]
+root         8  0.0  0.0      0     0 ?        I    Feb14   1:20 [rcu_sched]
+root         9  0.0  0.0      0     0 ?        I    Feb14   0:00 [rcu_bh]
+root        10  0.0  0.0      0     0 ?        S    Feb14   0:00 [migration/0]
+root        11  0.0  0.0      0     0 ?        S    Feb14   0:00 [watchdog/0]
+root        12  0.0  0.0      0     0 ?        S    Feb14   0:00 [cpuhp/0]
+root        13  0.0  0.0      0     0 ?        S    Feb14   0:00 [cpuhp/1]
+root        14  0.0  0.0      0     0 ?        S    Feb14   0:00 [watchdog/1]
+root        15  0.0  0.0      0     0 ?        S    Feb14   0:00 [migration/1]
+root        16  0.0  0.0      0     0 ?        S    Feb14   0:03 [ksoftirqd/1]
+root        18  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kworker/1:0H]
+root        19  0.0  0.0      0     0 ?        S    Feb14   0:00 [kdevtmpfs]
+root        20  0.0  0.0      0     0 ?        I<   Feb14   0:00 [netns]
+root        21  0.0  0.0      0     0 ?        S    Feb14   0:00 [rcu_tasks_kthre]
+root        22  0.0  0.0      0     0 ?        S    Feb14   0:00 [kauditd]
+root        25  0.0  0.0      0     0 ?        S    Feb14   0:00 [khungtaskd]
+root        26  0.0  0.0      0     0 ?        S    Feb14   0:00 [oom_reaper]
+root        27  0.0  0.0      0     0 ?        I<   Feb14   0:00 [writeback]
+root        28  0.0  0.0      0     0 ?        S    Feb14   0:00 [kcompactd0]
+root        29  0.0  0.0      0     0 ?        SN   Feb14   0:00 [ksmd]
+root        30  0.0  0.0      0     0 ?        SN   Feb14   0:00 [khugepaged]
+root        31  0.0  0.0      0     0 ?        I<   Feb14   0:00 [crypto]
+root        32  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kintegrityd]
+root        33  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kblockd]
+root        34  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ata_sff]
+root        35  0.0  0.0      0     0 ?        I<   Feb14   0:00 [md]
+root        36  0.0  0.0      0     0 ?        I<   Feb14   0:00 [edac-poller]
+root        37  0.0  0.0      0     0 ?        I<   Feb14   0:00 [devfreq_wq]
+root        38  0.0  0.0      0     0 ?        I<   Feb14   0:00 [watchdogd]
+root        41  0.0  0.0      0     0 ?        S    Feb14   0:00 [kswapd0]
+root        42  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kworker/u5:0]
+root        43  0.0  0.0      0     0 ?        S    Feb14   0:00 [ecryptfs-kthrea]
+root        85  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kthrotld]
+root        86  0.0  0.0      0     0 ?        I<   Feb14   0:00 [acpi_thermal_pm]
+root        87  0.0  0.0      0     0 ?        S    Feb14   0:00 [scsi_eh_0]
+root        88  0.0  0.0      0     0 ?        I<   Feb14   0:00 [scsi_tmf_0]
+root        89  0.0  0.0      0     0 ?        S    Feb14   0:00 [scsi_eh_1]
+root        90  0.0  0.0      0     0 ?        I<   Feb14   0:00 [scsi_tmf_1]
+root        96  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ipv6_addrconf]
+root       105  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kstrp]
+root       122  0.0  0.0      0     0 ?        I<   Feb14   0:00 [charger_manager]
+root       320  0.0  0.0      0     0 ?        I<   Feb14   0:00 [raid5wq]
+root       362  0.0  0.0      0     0 ?        I<   Feb14   0:03 [kworker/0:1H]
+root       381  0.0  0.0      0     0 ?        S    Feb14   0:10 [jbd2/vda1-8]
+root       382  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ext4-rsv-conver]
+root       435  0.0  0.0      0     0 ?        I<   Feb14   0:00 [kworker/1:1H]
+root       451  0.0  5.1 343056 198644 ?       S<s  Feb14   0:17 /lib/systemd/systemd-journald
+root       473  0.0  0.0      0     0 ?        I<   Feb14   0:00 [rpciod]
+root       475  0.0  0.0      0     0 ?        I<   Feb14   0:00 [xprtiod]
+root       477  0.0  0.0      0     0 ?        I<   Feb14   0:00 [iscsi_eh]
+root       479  0.0  0.0  98776  1796 ?        Ss   Feb14   0:00 /sbin/lvmetad -f
+root       483  0.0  0.1  45560  5496 ?        Ss   Feb14   0:01 /lib/systemd/systemd-udevd
+root       484  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ib-comp-wq]
+root       485  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ib-comp-unb-wq]
+root       486  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ib_mcast]
+root       487  0.0  0.0      0     0 ?        I<   Feb14   0:00 [ib_nl_sa_wq]
+root       503  0.0  0.0      0     0 ?        I<   Feb14   0:00 [rdma_cm]
+root       845  0.0  0.0  48760  3720 ?        Ss   Feb14   0:00 /sbin/rpcbind -f -w
+root       944  0.0  0.0      0     0 ?        I    Feb16   0:03 [kworker/0:1]
+root       993  0.0  0.0      0     0 ?        I<   Feb14   0:00 [mlx5_ib_sigerr_]
+systemd+  1197  0.0  0.1  81088  5848 ?        Ss   Feb14   0:00 /lib/systemd/systemd-networkd
+systemd+  1227  0.0  0.1  71676  4876 ?        Ss   Feb14   0:06 /lib/systemd/systemd-resolved
+root      1345  0.0  0.1  61004  7228 ?        Ss   Feb14   0:00 /usr/sbin/nghttpx --conf=/etc/nghttpx/nghttpx.conf
+root      1356  0.0  0.0 236888  2284 ?        Ssl  Feb14   0:01 /usr/bin/lxcfs /var/lib/lxcfs/
+root      1359  0.0  0.4 170792 17340 ?        Ssl  Feb14   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-trigger
+daemon    1362  0.0  0.0  29384  2472 ?        Ss   Feb14   0:00 /usr/sbin/atd -f
+syslog    1364  0.0  0.1 264092  4928 ?        Ssl  Feb14   0:03 /usr/sbin/rsyslogd -n
+root      1365  0.0  0.1  71556  5988 ?        Ss   Feb14   0:00 /lib/systemd/systemd-logind
+root      1368  0.0  0.0  31716  3264 ?        Ss   Feb14   0:02 /usr/sbin/cron -f
+message+  1374  0.0  0.1  51240  4460 ?        Ss   Feb14   0:03 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfi
+root      1392  0.0  0.0  33200  2076 ?        Ssl  Feb14   0:00 /usr/sbin/rshim
+root      1396  0.0  0.0  21736  3684 ?        S    Feb14   0:07 /bin/bash /usr/local/sa/agent/watchdog.sh
+ntp       1423  0.0  0.1 108824  4108 ?        Ssl  Feb14   0:07 /usr/sbin/ntpd -p /var/run/ntpd.pid -g -u 111:115
+redis     1435  0.0  0.0  51852  3640 ?        Ssl  Feb14   3:17 /usr/bin/redis-server 127.0.0.1:6379
+root      1448  0.0  0.1  73296  6100 ?        Sl   Feb14   0:00 /usr/sbin/nghttpx --conf=/etc/nghttpx/nghttpx.conf
+root      1457  0.0  0.5  39352 21128 ?        Ss   Feb14   2:18 /usr/local/sa/agent/secu-tcs-agent
+root      1476  0.0  0.5 187520 19940 ?        Ssl  Feb14   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-
+root      1478  0.0  0.1 287924  6808 ?        Ssl  Feb14   0:05 /usr/lib/accountsservice/accounts-daemon
+root      1492  0.0  1.1 1355308 45604 ?       Ssl  Feb14   1:58 /usr/bin/containerd
+root      1493  0.0  0.1  73352  6484 ?        Ss   Feb14   0:07 /usr/sbin/sshd -D
+root      1534  0.0  0.0  26432   300 ?        Ss   Feb14   0:03 /sbin/iscsid
+root      1535  0.0  0.1  26936  5284 ?        S<Ls Feb14   0:00 /sbin/iscsid
+root      1594  0.0  0.0  13036   140 ?        Ss   Feb14   0:07 /usr/sbin/rngd -r /dev/hwrng
+root      1612  0.0  0.2  28768  8644 ?        Sl   Feb14   0:34 /usr/local/qcloud/tat_agent/tat_agent
+root      1631  0.0  0.1 289936  6684 ?        Ssl  Feb14   0:02 /usr/lib/policykit-1/polkitd --no-debug
+root      1795  0.0  0.0  18432  2392 ttyS0    Ss+  Feb14   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,38400,9600 ttyS0 vt220
+root      1802  0.0  0.0  18656  1980 tty1     Ss+  Feb14   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root      1835  0.0  0.0 142308  1652 ?        Ss   Feb14   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process 
+www-data  1840  0.0  0.2 145576 10016 ?        S    Feb14   0:01 nginx: worker process
+www-data  1841  0.0  0.2 145024  9336 ?        S    Feb14   0:00 nginx: worker process
+root      1980  0.0  1.8 1413392 72684 ?       Ssl  Feb14   0:36 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.s
+root      2318  0.0  0.2 1320712 10364 ?       Sl   Feb14   0:48 /usr/local/qcloud/YunJing/YDLive/YDLive
+root      2405  0.0  0.0 101460  3524 ?        Sl   Feb14   0:02 /usr/local/qcloud/stargate/bin/sgagent -d
+root      2434  0.0  0.2  55936  9244 ?        S    Feb14   0:02 barad_agent
+root      2440  0.0  0.3  65520 11704 ?        S    Feb14   2:42 barad_agent
+root      2441  0.4  0.3 511724 15420 ?        Sl   Feb14  17:50 barad_agent
+root      2545  0.8  1.5 989028 58432 ?        Sl   Feb14  34:54 /usr/local/qcloud/YunJing/YDEyes/YDService
+root      2724  0.0  0.2 1314224 8260 ?        Sl   Feb14   0:37 /bin/sh -c sleep 100
+root      4031  0.0  0.0      0     0 ?        I    11:13   0:00 [kworker/u4:0]
+root      6919  0.0  0.0      0     0 ?        I    11:16   0:00 [kworker/0:0]
+root      8948  0.0  0.0      0     0 ?        I    Feb16   0:03 [kworker/1:1]
+root      9576  0.0  0.0      0     0 ?        I    11:17   0:00 [kworker/1:2]
+root     11402  0.0  0.0      0     0 ?        I    11:18   0:00 [kworker/u4:3]
+root     14273  0.0  0.2 712196  9560 ?        Sl   11:20   0:00 /usr/bin/containerd-shim-runc-v2 -namespace moby -id 02213a43623578
+root     14301  0.0  0.0   5788  3148 ?        Ss   11:20   0:00 /bin/bash /start.sh
+root     14330  0.1  1.7 298128 65952 ?        Sl   11:20   0:00 python app.py
+root     17241  0.0  0.1 109040  7160 ?        Ss   11:27   0:00 sshd: ubuntu [priv]
+ubuntu   17321  0.4  0.1 109396  5348 ?        R    11:27   0:00 sshd: ubuntu@pts/0,pts/1
+ubuntu   17322  0.0  0.1  23444  5576 pts/0    Ss   11:27   0:00 -bash
+ubuntu   17325  0.0  0.1  25504  5676 pts/1    Ss   11:27   0:00 -bash
+ubuntu   17506  0.1  0.1  42744  4336 pts/1    S+   11:27   0:00 top
+root     18818  0.0  0.0   9944   784 ?        S    11:28   0:00 sleep 60
+ubuntu   19334  0.0  0.0  15340  3488 ?        Ss   11:29   0:00 bash -c export LANG="en_US";export LANGUAGE="en_US";export LC_ALL=
+ubuntu   19339  0.0  0.0   9944   784 ?        S    11:29   0:00 sleep 1
+ubuntu   19340  0.0  0.0  37768  3368 pts/0    R+   11:29   0:00 ps aux
+root     25108  0.0  0.0      0     0 ?        I    10:45   0:00 [kworker/u4:2]
+ubuntu   31722  0.0  0.2  77716  7772 ?        Ss   11:08   0:00 /lib/systemd/systemd --user
+ubuntu   31723  0.0  0.0 194888  2624 ?        S    11:08   0:00 (sd-pam)
+root     32376  0.0  0.1 109036  7120 ?        Ss   11:08   0:00 sshd: ubuntu [priv]
+ubuntu   32477  0.0  0.1 109036  4616 ?        S    11:08   0:00 sshd: ubuntu@notty
+ubuntu   32478  0.0  0.0  16192  2060 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu   32479  0.0  0.0  16192  2172 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu   32480  0.0  0.0  16192  2180 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu   32481  0.0  0.0  16192  2064 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu   32482  0.0  0.0  16192  2056 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu   32483  0.0  0.0  16192  2092 ?        Ss   11:08   0:00 /usr/lib/openssh/sftp-server
+ubuntu@VM-0-7-ubuntu:~$ sudo docker exec -it 0221 /bin/bash
+root@VM-0-7-ubuntu:/# env
+HOSTNAME=VM-0-7-ubuntu
+PYTHON_VERSION=3.9.16
+SSLKEYLOGFILE=/app/download/ssl.log
+PWD=/
+PYTHON_SETUPTOOLS_VERSION=58.1.0
+HOME=/root
+LANG=C.UTF-8
+GPG_KEY=E3FF2839C048B25C084DEBE9B26995E310250568
+TERM=xterm
+SHLVL=1
+PYTHON_PIP_VERSION=22.0.4
+PYTHON_GET_PIP_SHA256=1e501cf004eac1b7eb1f97266d28f995ae835d30250bec7f8850562703067dc6
+PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/66030fa03382b4914d4c4d0896961a0bdeeeb274/public/get-pip.py
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+_=/usr/bin/env
+root@VM-0-7-ubuntu:/# exit
+exit
+ubuntu@VM-0-7-ubuntu:~$ sudo apt-get update
+Hit:1 http://mirrors.tencentyun.com/ubuntu bionic InRelease
+Get:2 http://mirrors.tencentyun.com/ubuntu bionic-security InRelease [88.7 kB]                                                     
+Get:3 http://mirrors.tencentyun.com/ubuntu bionic-updates InRelease [88.7 kB]                                                      
+Get:4 http://mirrors.tencentyun.com/ubuntu bionic-security/restricted Sources [31.2 kB]                                            
+Get:5 http://mirrors.tencentyun.com/ubuntu bionic-security/universe Sources [320 kB]                                               
+Get:6 http://mirrors.tencentyun.com/ubuntu bionic-security/main Sources [295 kB]                                                   
+Get:7 http://mirrors.tencentyun.com/ubuntu bionic-security/main amd64 Packages [2,570 kB]                                          
+Get:8 http://mirrors.tencentyun.com/ubuntu bionic-security/main i386 Packages [1,318 kB]                                           
+Get:9 https://deb.nodesource.com/node_16.x bionic InRelease [4,584 B]                                                              
+Hit:10 http://ppa.launchpad.net/certbot/certbot/ubuntu bionic InRelease                                                            
+Get:11 http://mirrors.tencentyun.com/ubuntu bionic-security/main Translation-en [445 kB]                                           
+Get:12 http://mirrors.tencentyun.com/ubuntu bionic-security/restricted amd64 Packages [1,113 kB]                                   
+Get:13 http://mirrors.tencentyun.com/ubuntu bionic-security/restricted Translation-en [154 kB]                                     
+Get:14 http://mirrors.tencentyun.com/ubuntu bionic-security/universe i386 Packages [1,059 kB]                                      
+Get:15 http://mirrors.tencentyun.com/ubuntu bionic-security/universe amd64 Packages [1,270 kB]                                     
+Get:16 http://mirrors.tencentyun.com/ubuntu bionic-security/universe Translation-en [296 kB]                                       
+Get:17 http://mirrors.tencentyun.com/ubuntu bionic-updates/universe Sources [496 kB]                                               
+Get:18 http://mirrors.tencentyun.com/ubuntu bionic-updates/main Sources [541 kB]                                                   
+Get:19 http://mirrors.tencentyun.com/ubuntu bionic-updates/main amd64 Packages [2,902 kB]                                          
+Get:20 http://mirrors.tencentyun.com/ubuntu bionic-updates/main i386 Packages [1,609 kB]                                     
+Get:21 https://deb.nodesource.com/node_16.x bionic/main amd64 Packages [777 B]                                           
+Get:22 https://download.docker.com/linux/ubuntu bionic InRelease [64.4 kB]                                                         
+Get:23 http://mirrors.tencentyun.com/ubuntu bionic-updates/restricted amd64 Packages [1,144 kB]                     
+Get:24 http://mirrors.tencentyun.com/ubuntu bionic-updates/universe amd64 Packages [1,881 kB]                       
+Get:25 http://mirrors.tencentyun.com/ubuntu bionic-updates/universe i386 Packages [1,647 kB]                    
+Hit:26 http://ppa.launchpad.net/deadsnakes/ppa/ubuntu bionic InRelease                                          
+Get:27 http://mirrors.tencentyun.com/ubuntu bionic-updates/universe Translation-en [410 kB]                               
+Get:28 https://download.docker.com/linux/ubuntu bionic/stable amd64 Packages [33.6 kB]                                        
+Fetched 19.8 MB in 3s (5,976 kB/s)                           
+Reading package lists... Done
+ubuntu@VM-0-7-ubuntu:~$ 

@@ -1,0 +1,705 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Trusted Site</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap3 -->
+        <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap-treeview.min.css" rel="stylesheet">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- tree view-->
+        <script src="bootstrap-treeview.min.js"></script>
+
+        <!-- React -->
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+        
+
+        <style>
+            body {
+                background-color: #87CEFA;
+                background-size: cover;
+                background-attachment: fixed;
+                font-family: Verdana, helvetica, arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="secfs-page"></div>
+        </div>
+
+        <script type="text/babel">
+            class SecFSPage extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {is_login: 0};
+                    this.user_info = {};
+                    this.user_info_list = [];
+                    this.file_slots = [];
+                    this.curr_selected_exi_id = null;
+                    this.curr_selected_dir_info = null;
+                    this.curr_selected_file_info = null;
+
+                    this.filename = "";
+                    this.file_data = "";
+                    this.dir_name = "";
+
+                    this.update_user_info= this.update_user_info.bind(this);
+                    this.update_user_list = this.update_user_list.bind(this);
+                    this.handleRefreshBtn = this.handleRefreshBtn.bind(this);
+                    this.handleNewFileBtn = this.handleNewFileBtn.bind(this);
+                    this.handleFileNameChange = this.handleFileNameChange.bind(this);
+                    this.handleFileDataChange = this.handleFileDataChange.bind(this);
+                    this.handleDirNameChange = this.handleDirNameChange.bind(this);
+                    this.updateFile = this.updateFile.bind(this);
+                    this.tick_actions();
+
+                }
+
+                componentDidMount() {
+                    this.timerID = setInterval(
+                        () => this.tick(),
+                        1000
+                    );
+                }
+                
+                componentWillUnmount() {
+                    clearInterval(this.timerID);
+                }
+                
+                tick() {
+                    this.tick_actions();
+                }
+
+                tick_actions(){
+                    this.update_user_info();
+                    this.update_user_list();
+                    this.render();
+                    this.refreshFileTree();
+                }
+
+                update_user_info(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(this.user_info);
+                                if(json.code == 0){
+                                    this.setState({is_login: 1});
+                                    this.user_info = json.data;
+                                } else{
+                                    console.log("session expired");
+                                    this.setState({is_login: 0});
+                                    window.location.href = "/login.html";
+                                }
+                            } else{
+                                this.setState({is_login: 0});
+                                window.location.href = "/login.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();
+                }
+
+                update_user_list(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/user/list", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    this.user_info_list = json.data;
+                                } else{
+                                    console.log("Failed to get user list");
+                                }
+                            } else{
+                                console.log("Failed to get user list");
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send();            
+                }
+
+                getUsernameByUID(uid){
+                    for(var i = 0; i < this.user_info_list.length; i++){
+                        if(this.user_info_list[i].uid == uid){
+                            return this.user_info_list[i].name;
+                        }
+                    }
+                    return "[unknown]";
+                }
+
+                getFileSlots(){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/slots", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send(null);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            this.file_slots = json.data.file_slots;
+                            //console.log(this.file_slots);
+                        } else{
+                            console.log("Can not get file slots");
+                        }
+                    }          
+                }
+
+                getDirInfo(ext_id){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/dir/info", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send("ext_id=" + ext_id);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            return json.data;
+                        }
+                    }
+                    return null;
+                }
+
+                getFileInfo(ext_id){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/info", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send("ext_id=" + ext_id);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            return json.data;
+                        }
+                    }
+                    return null;
+                }
+
+                buildFileTree(treeEntry, start_ext_id){
+                    var tmp_tree = treeEntry;
+                    var dir_info = this.getDirInfo(start_ext_id);
+                    //console.log(dir_info);
+                    if(dir_info == null){
+                        return false;
+                    }
+                    // push into tree
+                    var new_len = tmp_tree.push(
+                        {
+                            text: dir_info.dir_name,
+                            tags: [dir_info.ext_id, this.file_slots[dir_info.ext_id]],
+                            nodes: []
+                        }
+                    );
+                    tmp_tree = tmp_tree[new_len-1].nodes;           
+                    var sub_ext_id_list = dir_info.sub_ext_id;
+                    for(var i = 0; i < sub_ext_id_list.length; i++){
+                        var sub_ext_id = sub_ext_id_list[i];
+                        if(this.file_slots[sub_ext_id] === "F"){
+                            var file_info = this.getFileInfo(sub_ext_id);
+                            if(file_info == null){
+                                return false;
+                            }
+                            //console.log(file_info);
+                            tmp_tree.push(
+                                {
+                                    text: file_info.filename,
+                                    tags: [file_info.ext_id, this.file_slots[file_info.ext_id]],
+                                }
+                            );
+                        } else if(this.file_slots[sub_ext_id] === "D"){
+                            var dir_info = this.getDirInfo(sub_ext_id);
+                            if(dir_info == null){
+                                return false;
+                            }
+                            //console.log(dir_info);
+                            if(this.buildFileTree(tmp_tree, sub_ext_id) == false){
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+
+                createFile(parent_id, event){
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/create", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Created");
+                                    window.location.href = "/secfs.html";
+                                } else{
+                                    alert("Failed to create file");
+                                    window.location.href = "/secfs.html";
+                                }
+                            } else{
+                                alert("Failed to create file");
+                                window.location.href = "/secfs.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("parent_id=" + parent_id + "&filename=" + this.filename + "&data=" + this.file_data); 
+                }
+            
+                createDir(parent_id, event){
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/dir/create", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Created");
+                                    window.location.href = "/secfs.html";
+                                } else{
+                                    alert("Failed to create dir");
+                                    window.location.href = "/secfs.html";
+                                }
+                            } else{
+                                alert("Failed to create dir");
+                                window.location.href = "/secfs.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("parent_id=" + parent_id + "&dir_name=" + this.dir_name); 
+                }
+
+                deleteFile(ext_id, event){
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/delete", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Deleted");
+                                    window.location.href = "/secfs.html";
+                                } else{
+                                    alert("Failed to delete file");
+                                    window.location.href = "/secfs.html";
+                                }
+                            } else{
+                                alert("Failed to delete file");
+                                window.location.href = "/secfs.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("ext_id=" + ext_id + "&del_mode=erase"); 
+                }
+
+                deleteDir(ext_id, event){
+                    event.preventDefault();
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/dir/delete", true);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            if(xhr.status == 200){
+                                var json = JSON.parse(xhr.responseText);
+                                //console.log(json);
+                                if(json.code == 0){
+                                    alert("Deleted");
+                                    window.location.href = "/secfs.html";
+                                } else{
+                                    alert("Failed to delete dir");
+                                    window.location.href = "/secfs.html";
+                                }
+                            } else{
+                                alert("Failed to delete dir");
+                                window.location.href = "/secfs.html";
+                            }
+                        }
+                    }.bind(this);
+                    xhr.send("ext_id=" + ext_id + "&rm_mode=recur");
+                }
+
+                renameFile(ext_id, new_filename){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/rename", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send("ext_id=" + ext_id + "&new_filename=" + new_filename);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            return true;
+                        }
+                    }
+                    return false;                         
+                }
+
+                updateFileData(ext_id, data){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/update", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send("ext_id=" + ext_id + "&data=" + data);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            return true;
+                        }
+                    }
+                    return false;                         
+                }
+
+                updateFile(ext_id, old_filename, old_data, event){
+                    event.preventDefault();
+                    var filename = document.getElementById("file-name-input2").value;
+                    if(old_filename != filename){
+                        if(this.renameFile(ext_id, filename) == false){
+                            alert("Failed to rename file: " + filename);
+                            window.location.href = "/secfs.html";
+                            return;
+                        }
+                    }
+                    var file_data = document.getElementById("file-data-input2").value;
+                    if(old_data != file_data){
+                        if(this.updateFileData(ext_id, file_data) == false){
+                            alert("Failed to update file data: " + filename);
+                            window.location.href = "/secfs.html";
+                            return;
+                        }
+                    }
+                    window.location.href = "/secfs.html";
+                }
+
+                getFileData(ext_id) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/api/secfs/file/read", false);
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.instance = false;
+                    xhr.send("ext_id=" + ext_id);
+                    if(xhr.status === 200){
+                        var json = JSON.parse(xhr.responseText);
+                        if(json.code == 0){
+                            return json.data.file_data;
+                        }
+                    }
+                    return null;           
+                }
+
+                handleFileNameChange(event){
+                    this.filename = event.target.value;
+                }
+
+                handleDirNameChange(event){
+                    this.dir_name = event.target.value;
+                }
+
+                handleFileDataChange(event){
+                    this.file_data = event.target.value;
+                }
+
+                handleNewFileBtn(event){
+                    event.preventDefault();
+
+                    if(this.curr_selected_exi_id == null || this.file_slots[this.curr_selected_exi_id] != "D"){
+                        alert("Please select a directory");
+                        return;
+                    }
+                    ReactDOM.render(
+                    <div>
+                        <button id="btn-pop-file-create-window" className="btn btn-primary btn-lg" data-toggle="modal" style={{display: "none"}}
+                        data-target="#create-file-modal"></button>
+                        <div className="modal fade" id="create-file-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 className="modal-title" id="myModalLabel">New File</h4>
+                                        <p>{this.curr_selected_dir_info.dir_name}</p>
+                                    </div>
+                                    <div className="modal-body">
+                                        <label htmlFor="name">filename</label>
+                                        <input id="file-name-input" onInput={this.handleFileNameChange}
+                                        type="text" className="form-control" maxLength="128"/>
+                                        <label htmlFor="name" style={{marginTop: "5px"}}>data</label>
+                                        <textarea  onInput={this.handleFileDataChange}
+                                        id="file-data-input" className="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button onClick={this.createFile.bind(this, this.curr_selected_exi_id)}
+                                        type="button" className="btn btn-success">save</button>
+                                        <button type="button" className="btn btn-default" data-dismiss="modal">close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>,
+                    document.getElementById('create-file'));
+                    $("#btn-pop-file-create-window").click();
+                }
+
+                handleNewDirBtn(event){
+                    event.preventDefault();
+
+                    if(this.curr_selected_exi_id == null || this.file_slots[this.curr_selected_exi_id] != "D"){
+                        alert("Please select a directory");
+                        return;
+                    }
+                    ReactDOM.render(
+                    <div>
+                        <button id="btn-pop-dir-create-window" className="btn btn-primary btn-lg" data-toggle="modal" style={{display: "none"}}
+                        data-target="#create-dir-modal"></button>
+                        <div className="modal fade" id="create-dir-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 className="modal-title" id="myModalLabel">New Dir</h4>
+                                        <p>{this.curr_selected_dir_info.dir_name}</p>
+                                    </div>
+                                    <div className="modal-body">
+                                        <label htmlFor="name">dir name</label>
+                                        <input id="dir-name-input" onInput={this.handleDirNameChange}
+                                        type="text" className="form-control" maxLength="128"/>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button onClick={this.createDir.bind(this, this.curr_selected_exi_id)}
+                                        type="button" className="btn btn-success">save</button>
+                                        <button type="button" className="btn btn-default" data-dismiss="modal">close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>,
+                    document.getElementById('create-dir'));
+                    $("#btn-pop-dir-create-window").click();
+                }
+
+                refreshFileTree(){
+                    this.getFileSlots();
+                    //console.log(this.file_slots);
+                    if(this.file_slots[0] != "D"){
+                        console.log("Can not find root dir");
+                        alert("Can not find root dir");
+                        return false;
+                    }
+                    var tree = [];
+                    // build a file tree by BFS, dir_info return by getDirInfo contains its sub files and dirs's ext_id
+                    if(this.buildFileTree(tree, 0) == false){
+                        console.log("Can not build file tree");
+                        alert("Can not build file tree");
+                        return false;
+                    }
+                    //console.log(tree);
+                    this.file_tree = tree;
+                    var click_call_back = function (event, node) {
+                        if(event.type == "nodeSelected"){
+                            this.curr_selected_exi_id = node.tags[0];
+                        } else if(event.type == "nodeUnselected"){
+                            this.curr_selected_exi_id = null;
+                        }
+                        if(node.tags[1] == "D"){
+                            var dir_info = this.getDirInfo(node.tags[0]);
+                            this.curr_selected_dir_info = dir_info;
+                            ReactDOM.render(
+                            <div>
+                                <button id="btn-pop-dir-options-window" className="btn btn-primary btn-lg" data-toggle="modal" style={{display: "none"}}
+                                data-target="#dir-option-modal"></button>
+                                <div className="modal fade" id="dir-option-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 className="modal-title" id="myModalLabel">{dir_info.dir_name}</h4>
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>ext id:&nbsp;&nbsp;{dir_info.ext_id}</p>
+                                                <p>sub:&nbsp;&nbsp;{dir_info.sub_ext_id.length}</p>
+                                                <p>owner:&nbsp;&nbsp;{this.getUsernameByUID(dir_info.owner)}</p>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" onClick={this.deleteDir.bind(this, dir_info.ext_id)}
+                                                className="btn btn-danger">delete</button>
+                                                <button type="button" id="btn-close-dir-options-window" className="btn btn-default" data-dismiss="modal">close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>,
+                            document.getElementById('curr-selected-node'));
+                            $("#btn-pop-dir-options-window").click();
+                            return true; 
+                        } else if(node.tags[1] == "F"){
+                            var file_info = this.getFileInfo(node.tags[0]);
+                            this.curr_selected_file_info = file_info;
+                            var old_filename = file_info.filename;
+                            var old_file_data = this.getFileData(file_info.ext_id);
+                            ReactDOM.render(
+                            <div>
+                                <button id="btn-pop-file-options-window" className="btn btn-primary btn-lg" data-toggle="modal" style={{display: "none"}}
+                                data-target="#file-option-modal"></button>
+                                <div className="modal fade" id="file-option-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 className="modal-title" id="myModalLabel">{old_filename}</h4>
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>ext id:&nbsp;&nbsp;{file_info.ext_id}</p>
+                                                <p>size:&nbsp;&nbsp;{file_info.file_size}</p>
+                                                <p>owner:&nbsp;&nbsp;{this.getUsernameByUID(file_info.owner)}</p>
+                                                <p>hash:&nbsp;&nbsp;{file_info.hash}</p>
+                                                <div className="modal-body">
+                                                    <label htmlFor="name">filename</label>
+                                                    <input defaultValue={old_filename} id="file-name-input2"
+                                                    type="text" className="form-control" maxLength="128"/>
+                                                    <label htmlFor="name" style={{marginTop: "5px"}}>data</label>
+                                                    <textarea defaultValue={old_file_data} id="file-data-input2"
+                                                    className="form-control" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" onClick={this.deleteFile.bind(this, file_info.ext_id)}
+                                                className="btn btn-danger">delete</button>
+                                                <button type="button" onClick={this.updateFile.bind(this, file_info.ext_id, old_filename, old_file_data)}
+                                                className="btn btn-primary">save</button>
+                                                <button type="button" className="btn btn-default" data-dismiss="modal">close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>,
+                            document.getElementById('curr-selected-node'));
+                            $("#btn-pop-file-options-window").click();    
+                            return true;                      
+                        } else{
+                            return false;
+                        }
+                    }.bind(this);
+                    $('#tree').treeview({
+                        data: tree,
+                        showCheckbox: false,
+                        showBorder: true,
+                        collapseIcon:'glyphicon glyphicon-minus',
+                        expandIcon:'glyphicon glyphicon-plus',
+                        levels: 128,
+                        selectedBackColor: 'skyblue',
+                        selectedColor: 'skyblue',
+                        onNodeSelected: click_call_back,
+                        onNodeUnselected: click_call_back,
+                        onNodeChecked: function (event, node) {
+                            
+                        },
+                        onNodeUnchecked: function (event, node) {
+                            
+                        }
+                    });  
+                }
+
+                handleRefreshBtn(event){
+                    event.preventDefault();
+         
+                    this.refreshFileTree();
+                }
+
+                render() {
+                    //console.log("is_login: "+this.state.is_login);
+                    if(this.state.is_login == 0){
+                        return (
+<div className="row" style={{marginTop: "30%"}}>
+    <div className="col-sm-12 col-md-12" >
+        <div className="panel panel-defaul" style={{boxShadow: "10px 10px 6px -4px"}}>
+            <div className="panel-heading"><h3 className="panel-title">Trusted Site</h3></div>                             
+            <div className="panel-body">Loading...</div>
+        </div>
+    </div>
+</div>
+                        );
+                    } else{
+                        return (
+<div className="row" style={{marginTop: "5%"}}>
+    <div className="col-sm-12 col-md-12" >
+        <div className="panel panel-defaul" style={{boxShadow: "10px 10px 6px -4px"}}>
+            <div className="panel-heading"><h3 className="panel-title">Secure File System Explorer</h3></div>                             
+            <div className="panel-body">
+                <div className="row">
+                    <div className="col-sm-1 col-md-1">
+                        <button onClick={this.handleNewFileBtn.bind(this)}
+                        type="button" className="btn btn-primary">New FILE</button>
+                    </div>
+                    <div className="col-sm-1 col-md-1">
+                        <button onClick={this.handleNewDirBtn.bind(this)}
+                        type="button" className="btn btn-primary">New DIR</button>
+                    </div>
+                    <div className="col-sm-1 col-md-1">
+                        <button id="refresh-btn" onClick={this.handleRefreshBtn.bind(this)}
+                        type="button" className="btn btn-default">Refresh</button>
+                    </div>
+                </div>
+                <div className="row">
+                    <hr style={{color: "#0D6EFD", marginTop: "1%"}} width="300" size="1" />
+                </div>
+                <div className="row">
+                    <div className="well well-lg">
+                        <div id="tree"></div>
+                        <div id="curr-selected-node"></div>
+                        <div id="create-file"></div>
+                        <div id="read-file"></div>
+                        <div id="create-dir"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        );
+                    }
+                }
+            }
+                
+            ReactDOM.render(
+                <SecFSPage />,
+                document.getElementById('secfs-page')
+            );
+        </script>
+    </body>
+</html>

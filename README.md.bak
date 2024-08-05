@@ -1,0 +1,204 @@
+# ctf-writeup-collection
+
+## Mostly pwn, keep updating.
+
+> __要补的实在太多了😭😭__
+
+### Recent-todo-list
+
+#### AWD
+
+- [x] [awd pwn——LIEF学习](https://blog.csdn.net/qq_54218833/article/details/129959460)
+	- 1
+
+#### 语言拓展
+
+- [ ] 熟悉 go 及其逆向
+	- 5
+- [x] 熟悉 rust 及其逆向
+	- 5
+	- 虽然 rust 很有趣，但是确实不适合拿来写 kernel exp🥲
+
+#### kernel
+
+- [ ] 复现 CVE-2021-22555
+	- 100
+
+#### V8
+
+- [ ] 整理 V8 学习资料
+	- 90
+
+#### tutorial
+
+- [x] 教评结束前整理 pwn 题解
+
+#### CTF-Repro
+
+- [ ] 2023-ByteCTF
+- [ ] 2022-d3CTF
+- [ ] 2023-d3CTF
+- [ ] 2023-GoogleCTF
+	- 80
+- [ ] 2023-HITCONCTF
+
+- [ ] 强网杯 RW 题目
+	- 70
+
+---
+
+### Challenge-List
+- [x] [RoarCTF-2019](RoarCTF-2019)
+	- [x] [realloc\_magic](RoarCTF-2019/realloc_magic)
+		- glibc2.27 | realloc | IO
+- [x] [StarCTF-2019](StarCTF-2019)
+    - [x] [OOB](StarCTF-2019/pwn-OOB)
+        - V8
+- [ ] [ByteCTF-2021](ByteCTF-2021)
+	- [x] [bytezoom](ByteCTF-2021/bytezoom)
+	- [ ] [byteCSMS](ByteCTF-2021/byteCSMS)
+- [ ] [HWS\_online-2022]()
+	- [ ] [house\_of\_husk]()
+	- [ ] [peach]()
+	- [ ] [grape]()
+- [ ] [SUSCTF-2022]()
+	- [ ] [rain]()
+	- [x] [happyTree]()
+		 - glibc2.27 | tcache
+	- [ ] [mujs]()
+	- [ ] [kqueue]()
+	- [ ] [kqueue\_rev]()
+- [ ] [d3ctf-2022]()
+	- [ ] [d3fuse]()
+	- [ ] [d3bpf]()
+	- [ ] [d3guard]()
+	- [ ] [d3kheap]()
+	- [ ] [d3bpf-v2]()
+	- [ ] [smarCal]()
+- [x] [utCTF-2022]()
+	- [x] [bloat]()
+		 - kernel
+	- [x] [automated-exp-gen]()
+	- [x] [smol]()
+- [x] [wolvseccon-2022]()
+	- [x] [Us3\_th3\_F0rc3]()
+		 - house\_of\_force
+- [ ] [zer0pts-2022]()
+	- [ ] [0av]()
+	- [x] [modern-rome]()
+	- [ ] [memsafed]()
+	- [ ] [sbxnote]()
+	- [ ] [redis-lite]()
+- [ ] [spaceHerosCTF-2022]()
+	- [x] [rule\_of\_2]()
+	- [x] [rings\_of\_saturn]()
+	- [ ] [fuzz\_lightyear]()
+- [x] [HackPack-2022]()
+	- [x] [cerebrum-boggled]()
+		 - brainfuck-jit | rop | rust
+- [ ] [\*CTF-2022 | (StarCTF-2022)]()
+	- [x] [examination]()
+		 - glibc2.31 | heapfengshui
+	- [ ] [babynote]()
+	- [ ] [ping]()
+	- [ ] [babyarm]()
+- [ ] [MRCTF-2022]()
+	- [ ] [toy\_bricks]()
+	- [ ] [zigzag]()
+	- [ ] [ezbash]()
+	- [ ] [dynamic]()
+- [ ] [PatriotCTF-2022]()
+	- [ ] [mcchttp]()
+	- [x] [Password-Manager]()
+- [ ] [DASCTF-MAY-2022]()
+	- [ ] [山重水复]()
+	- [ ] [twists-and-turns]()
+	- [ ] [gift]()
+- [ ] [Dest0g3-520]()
+	- [x] [stack]()
+	- [x] [ezpwn]()
+	- [x] [ezkiwi]()
+		- glibc2.31 | IO-attack | tcache
+	- [x] [ezuaf]()
+		- glibc2.33 | tcache
+	- [x] [dest\_love]()
+		- string\_fmt
+	- [ ] [emma]()
+	- [ ] [dest0g3\_heap]()
+- [ ] [ciscn-2022-online]()
+	- [x] [login-nomal]()
+	- [ ] [satool]()
+	- [x] [newest\_note]()
+		- glibc2.34 | tcache & fastbin\_doublefree
+- [x] [ciscn-2022-华东北]()
+	- [x] [duck]()
+		- glibc2.34 | IO-attack
+	- [x] [bigduck]()
+		- glibc2.33 | setcontext | orw
+	- [x] [blue]()
+		- glibc2.31 | setcontext | chunk\_overlap
+- [ ] [ACTF-2022]()
+	- [ ] [treepwn]()
+	- [ ] [kkk]()
+	- [ ] [myKVM]()
+	- [ ] [EasyKVM]()
+	- [ ] [master-of-DNS]()
+	- [ ] [2048]()
+- [ ] [PCB-2022 | 鹏城杯-2022-online]()
+	- [x] [A\_fruit]()
+	- [ ] [arm\_prtoocol]()
+	- [x] [fruitshop]()
+	- [ ] [signin\_ROP]()
+- [ ] [蓝帽杯-2022]()
+	- [x] [escape\_shellcode]()
+		- find\_libc | shellcode
+	- [x] [Bank]()
+		- heapfengshui
+- [x] [PCB线下-2022]()
+	- 一坨沈阳美食家这个线下赛
+- [ ] [QWB-2022-online]()
+	- [x] [devnull]()
+	- [x] [houseofcat]()
+
+> 这里漏了一些比赛没有记录（之前太忙了）
+>
+> 等有空再补罢
+
+- [ ] [ByteCTF-2022]()
+    - [x] [mini\_http]()
+    - [x] [come\_and\_play]()
+    - [ ] [byte\_run]()
+    - [ ] [crazybrowser]()
+    - [ ] [easyKernel]()
+    - [ ] [OhMyWindows]()
+- [ ] [AsisCTF-2022]()
+    - [ ] [jsy]()
+    - [ ] [readable]()
+- [ ] [Hackergame-2022]()
+    - [x] [winepenguin]()
+    - [ ] [no_open]()
+    - [ ] [kanata]()
+    - [ ] [homogame]()
+    - [ ] [one\_byte\_man]()
+    - [x] [evilCallback]()
+        - V8-pwn | CVE-2021-21225 | ~~第一次出题~~
+- [ ] [HitconCTF-2022](HitconCTF-2022)
+    - [x] [Fourchain-Hole](HitconCTF-2022/hole)
+        - V8-pwn | sandbox
+    - [ ] ..
+- [ ] [RCTF-2022](RCTF-2022)
+    - [x] [diary](RCTF-2022/diary)
+    - [ ] ..
+- [ ] [PINGCTF-2022](PINGCTF-2022)
+    - [x] [pcg](PINGCTF-2022/pcg)
+    - [ ] [storage_room](PINGCTF-2022/storage_room)
+- [ ] [RealWorldCTF-2023](RealWorldCTF-2023)
+    - [ ] ..
+- [ ] [idekCTF-2023](idekCTF-2023)
+    - [x] [sprinter](idekCTF-2023/sprinter)
+
+
+
+--------
+
+More detailed writeups can be found in my [homepage](https://avavaaya.github.io/).

@@ -1,0 +1,9 @@
+nc 121.40.213.105 1443
+
+附件下载 提取码（GAME）
+
+提示1：无法完成TLS握手的选手，参考 defcon-quals-2022 的pretty-random-function 题目
+
+提示2：利用 openssl 设置TLS1.3的PSK握手可参考https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set_psk_use_session_callback.html 和 https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set_psk_find_session_callback.html
+
+ ip更换下；更新提示2

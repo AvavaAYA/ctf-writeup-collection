@@ -1,0 +1,23 @@
+#!/bin/sh
+case "$1" in
+  start)
+	printf "Starting mini httpd: "
+	/usr/bin/mini_httpd -u nobody -p 8080 -h 0.0.0.0 -d /var/www 2>&1 1>/dev/null
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	printf "Stopping mini httpd: "
+	killall -9 /usr/bin/mini_httpd
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+

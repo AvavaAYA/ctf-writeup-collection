@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Trusted Site</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap5 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1/dist/face-api.min.js"></script>
+
+        <style>
+            body {
+                background-color: #87CEFA;
+                background-size: cover;
+                background-attachment: fixed;
+                font-family: Verdana, helvetica, arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- a login form with react, placed in center of the screen. use blue base style through react -->
+        <div class="container">
+            <div class="row" style="margin-top: 25%">
+                <div class="col-sm-6 offset-sm-3 col-md-6 offset-md-3" >
+                        <div id="login-step"></div>
+                        <div class="modal fade" id="loginErrModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                            
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Error</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                            
+                                <div class="modal-body">
+                                    Login fail, Please try again later.
+                                </div>
+                            
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" 
+                                    onclick="window.location.href='/login.html';return false;" >Close</button>
+                                </div>
+                            
+                                </div>
+                            </div>
+                        </div>
+                        <button id="btn-open-login-err-modal" type="button" style="display: none;"
+                            class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginErrModal">
+                        </button>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/babel">
+            class LoginStep extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {step: "username-input"};
+                    this.username = "";
+                    this.password = "";
+                    //this.face_data = [];
+                    this.nextSetp = this.nextSetp.bind(this);
+                    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+                    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+                    this.handleInputChars = this.handleInputChars.bind(this);
+                    this.loginByPssswd = this.loginByPssswd.bind(this);
+                    this.loginByFaceID = this.loginByFaceID.bind(this);
+                    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+                }
+
+                nextSetp(_step, e){ 
+                    e.preventDefault();
+                    this.setState(prevState => ({
+                        step: _step
+                    }));
+                }
+
+                handleUsernameChange(event) {
+                    this.username = event.target.value;
+                }
+
+                handlePasswordChange(event) {
+                    this.password = event.target.value;
+                }
+
+                handleInputChars(event) {
+                    event.target.value = event.target.value.replace(/[\W]/g,'');
+                }
+
+                handleFormSubmit(event) {
+                    event.preventDefault();
+                }
+
+                loginByPssswd(e){
+                    e.preventDefault();
+
+                    // disable button
+                    e.target.disabled = true;
+                    document.getElementById("password-input-btn").innerHTML = "Waiting...";
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/api/login', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send('auth_mode=passwd&username=' + this.username + '&password=' + this.password);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            console.log(xhr.responseText);
+                            // parse response as json
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.code == 0) {
+                                console.log("Login success!");
+                                window.location.href = "/manager.html";
+                            } else {
+                                //alert("Login fail!");
+                                //window.location.href = "/login.html";
+                                document.getElementById("btn-open-login-err-modal").click();
+                            }
+                        }
+                    }
+                }
+
+                async loginByFaceID(e){
+                    e.preventDefault();
+
+                    // disable button
+                    e.target.disabled = true;
+                    document.getElementById("face-id-input-btn").innerHTML = "Waiting...";
+                    // stop video
+                    this.face_video.pause();
+
+                    const face_canvas = document.createElement('canvas', {display: 'none'});
+                    face_canvas.width = this.face_video.videoWidth;
+                    face_canvas.height = this.face_video.videoHeight;
+                    const ctx1 = face_canvas.getContext('2d');
+                    ctx1.drawImage(this.face_video, 0, 0, face_canvas.width, face_canvas.height);
+
+                    const tmp_img1 = new Image();
+                    tmp_img1.src = face_canvas.toDataURL();
+                    tmp_img1.style.display = 'none';
+                    document.body.appendChild(tmp_img1);
+
+                    const base64_1 = face_canvas.toDataURL().split(',')[1];
+                    const buffer1 = new Uint8Array(atob(base64_1).split('').map(char => char.charCodeAt(0)));
+                    const blob1 = new Blob([buffer1], { type: 'image/jpeg' });
+                    this.face_image = await faceapi.bufferToImage(blob1);
+
+                    await faceapi.nets.faceRecognitionNet.loadFromUri('./weights');
+                    await faceapi.nets.faceLandmark68Net.loadFromUri('./weights');
+                    await faceapi.nets.ssdMobilenetv1.loadFromUri('./weights');
+
+                    this.detection = await faceapi.detectSingleFace(this.face_image).withFaceLandmarks().withFaceDescriptor();
+
+                    if (!this.detection) {
+                        alert('No facial images detected, please try again!');
+                        // redirect to login page
+                        window.location.href = "login.html";
+                    }
+                    //console.log(this.detection.descriptor);
+                    document.getElementById("face-id-input-btn").innerHTML = "Matching...";
+                
+                    // send face data to server by ajax (form-urlencode)
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/api/login', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send('auth_mode=face_id&username=' + this.username + '&face_data=[' + this.detection.descriptor.toString()+']');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            console.log(xhr.responseText);
+                            // parse response as json
+                            const response = JSON.parse(xhr.responseText);
+                            // {"code": 0, "msg":"success"}
+                            if (response.code == 0) {
+                                window.location.href = "/index.html";
+                            } else {
+                                //alert("Login fail!");
+                                //window.location.href = "/login.html#loginErrModal";
+                                document.getElementById("btn-open-login-err-modal").click();
+                            }
+                        }
+                    }
+                    
+                }
+
+                componentDidUpdate(){
+                    switch(this.state.step){
+                        case "face-id-input":{
+                            this.face_video = document.getElementById('face_video');
+                            const getMedia = () => {
+                                return navigator.mediaDevices.getUserMedia({
+                                    video: true
+                                });
+                            };
+                            getMedia().then((stream) => {
+                                this.face_video.srcObject = stream;
+                            });
+                        }
+                        default:{
+                            break;
+                        }
+                    }
+                }
+                
+                render() {
+                    switch(this.state.step){
+                        case "username-input":{
+                            return (
+                                <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>       
+                                    <div className="card-header">                                    
+                                        <h5>Secure Login</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <form onSubmit={this.handleFormSubmit.bind(this)}>
+                                            <div className="form-floating mb-3 mt-3">
+                                                <input type="username" className="form-control" id="username" placeholder="Username" name="usrname" 
+                                                onChange={this.handleUsernameChange} maxLength="128" onKeyUp={this.handleInputChars}/>
+                                                <label htmlFor="comment">Username</label>
+                                            </div>          
+                                            <div className="d-grid">
+                                                <button type="button" className="btn btn-primary btn-block" onClick={this.nextSetp.bind(this, "auth-way")}>
+                                                    <svg t="1681925281511" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16088" width="32" height="32"><path d="M512 992C246.912 992 32 777.088 32 512 32 246.912 246.912 32 512 32c265.088 0 480 214.912 480 480 0 265.088-214.912 480-480 480z m0-64c229.76 0 416-186.24 416-416S741.76 96 512 96 96 282.24 96 512s186.24 416 416 416z" p-id="16089" fill="#e6e6e6"></path><path d="M688 480a32 32 0 0 1 0 64H272a32 32 0 0 1 0-64h416z" p-id="16090" fill="#e6e6e6"></path><path d="M707.072 512l-151.36-170.784a32 32 0 1 1 47.872-42.432l170.208 192a32 32 0 0 1 0 42.432l-170.24 192a32 32 0 1 1-47.872-42.432L707.072 512z" p-id="16091" fill="#e6e6e6"></path></svg>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        case "auth-way":{
+                            return (
+                                <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>
+                                    <div className="card-header">
+                                        <h5>Auth Method</h5>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="list-group">
+                                            <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" onClick={this.nextSetp.bind(this, "password-input")} aria-current="true">
+                                                <svg t="1681921630505" className="icon rounded-circle flex-shrink-0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1854" width="32" height="32"><path d="M511.5 64c129.51 0 234.501 104.99 234.501 234.5l0.001 93.537C810.89 393.63 863 446.729 863 512v328c0 66.274-53.726 120-120 120H280c-66.274 0-120-53.726-120-120V512c0-65.27 52.11-118.37 116.998-119.963V298.5C276.999 168.99 381.99 64 511.5 64zM743 448H280c-34.993 0-63.426 28.084-63.991 62.942L216 512v328c0 34.993 28.084 63.426 62.942 63.991L280 904h463c34.993 0 63.426-28.084 63.991-62.942L807 840V512c0-34.993-28.084-63.426-62.942-63.991L743 448z m-232 64c55.228 0 100 44.772 100 100 0 45.143-29.913 83.3-70.998 95.73L540 786c0 15.464-12.536 28-28 28s-28-12.536-28-28v-77.687c-42.112-11.781-73-50.44-73-96.313 0-55.228 44.772-100 100-100z m0 56c-24.3 0-44 19.7-44 44 0 19.72 12.972 36.409 30.848 42h26.304C542.028 648.41 555 631.72 555 612c0-24.3-19.7-44-44-44z m0.5-448c-97.597 0-176.9 78.327-178.476 175.549l-0.026 2.951V392h357.003v-93.5c0-97.597-78.328-176.9-175.55-178.476L511.5 120z" fill="#515151" p-id="1855"></path></svg>
+                                            <div className="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                <h6 className="mb-0">Password</h6>
+                                                <p className="mb-0 opacity-75">Login with username and password.</p>
+                                                </div>
+                                                <small className="opacity-50 text-nowrap">default</small>
+                                            </div>
+                                            </a>
+                                            <a href="#" className="list-group-item list-group-item-action d-flex gap-3 py-3" 
+                                                onClick={this.nextSetp.bind(this, "face-id-input")} aria-current="true">
+                                            <svg t="1681921734449" className="rounded-circle flex-shrink-0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4287" width="32" height="32"><path d="M896 256v64a21.333333 21.333333 0 0 1-21.333333 21.333333h-42.666667a21.333333 21.333333 0 0 1-21.333333-21.333333V256a42.666667 42.666667 0 0 0-42.666667-42.666667h-64a21.333333 21.333333 0 0 1-21.333333-21.333333v-42.666667a21.333333 21.333333 0 0 1 21.333333-21.333333H768a128 128 0 0 1 128 128zM320 810.666667H256a42.666667 42.666667 0 0 1-42.666667-42.666667v-64a21.333333 21.333333 0 0 0-21.333333-21.333333h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333333V768a128 128 0 0 0 128 128h64a21.333333 21.333333 0 0 0 21.333333-21.333333v-42.666667a21.333333 21.333333 0 0 0-21.333333-21.333333z m-170.666667-469.333334h42.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V256a42.666667 42.666667 0 0 1 42.666667-42.666667h64a21.333333 21.333333 0 0 0 21.333333-21.333333v-42.666667a21.333333 21.333333 0 0 0-21.333333-21.333333H256a128 128 0 0 0-128 128v64a21.333333 21.333333 0 0 0 21.333333 21.333333z m725.333334 341.333334h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333333V768a42.666667 42.666667 0 0 1-42.666667 42.666667h-64a21.333333 21.333333 0 0 0-21.333333 21.333333v42.666667a21.333333 21.333333 0 0 0 21.333333 21.333333H768a128 128 0 0 0 128-128v-64a21.333333 21.333333 0 0 0-21.333333-21.333333zM384 448v-85.333333a21.333333 21.333333 0 0 0-21.333333-21.333334h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333334v85.333333a21.333333 21.333333 0 0 0 21.333333 21.333333h42.666667a21.333333 21.333333 0 0 0 21.333333-21.333333z m341.333333 0v-85.333333a21.333333 21.333333 0 0 0-21.333333-21.333334h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333334v85.333333a21.333333 21.333333 0 0 0 21.333333 21.333333h42.666667a21.333333 21.333333 0 0 0 21.333333-21.333333zM448 597.333333a106.666667 106.666667 0 0 0 106.666667-106.666666v-128a21.333333 21.333333 0 0 0-21.333334-21.333334h-42.666666a21.333333 21.333333 0 0 0-21.333334 21.333334v128a21.333333 21.333333 0 0 1-21.333333 21.333333 21.333333 21.333333 0 0 0-21.333333 21.333333v42.666667a21.333333 21.333333 0 0 0 21.333333 21.333333z m178.346667 66.986667a21.76 21.76 0 0 0-28.586667-4.693333 175.36 175.36 0 0 1-170.666667 0 21.76 21.76 0 0 0-28.586666 4.693333l-25.6 34.56a20.906667 20.906667 0 0 0 4.693333 30.72A256 256 0 0 0 512 768a252.586667 252.586667 0 0 0 134.826667-38.4 20.906667 20.906667 0 0 0 5.12-30.72z" p-id="4288" fill="#515151"></path></svg>
+                                            <div className="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                <h6 className="mb-0">Face ID</h6>
+                                                <p className="mb-0 opacity-75">Login with your face ID.</p>
+                                                </div>
+                                                <small className="opacity-50 text-nowrap"></small>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        case "password-input":{
+                            return ( <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>       
+                                        <div className="card-header">                                            
+                                            <h5>Secure Login</h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <form onSubmit={this.handleFormSubmit.bind(this)}>
+                                                <div className="form-floating mb-3 mt-3">
+                                                    <input type="password" className="form-control" id="pwd" placeholder="Enter Password" name="pswd" 
+                                                        onChange={this.handlePasswordChange} maxLength="128" />
+                                                    <label htmlFor="comment">Password</label>
+                                                </div>           
+                                                <div className="d-grid">
+                                                    <button type="button" className="btn btn-primary btn-block"
+                                                        onClick={this.loginByPssswd.bind(this)} id="password-input-btn">
+                                                        <svg t="1681925148708" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13039" width="32" height="32"><path d="M512 959C265.53 959 65 758.47 65 512S265.53 65 512 65s447 200.53 447 447-200.53 447-447 447z m0-831.63c-212.09 0-384.63 172.54-384.63 384.63S299.91 896.63 512 896.63 896.63 724.09 896.63 512 724.09 127.37 512 127.37z" fill="#e6e6e6" p-id="13040"></path><path d="M435.69 749.37c-7.98 0-15.96-3.05-22.05-9.14L237.05 563.64c-12.18-12.17-12.18-31.93 0-44.1 12.18-12.18 31.92-12.18 44.1 0l154.54 154.54 307.16-307.15c12.18-12.18 31.92-12.18 44.1 0s12.18 31.93 0 44.1l-329.21 329.2a31.091 31.091 0 0 1-22.05 9.14z" fill="#e6e6e6" p-id="13041"></path></svg>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                            );
+                        }
+                        case "face-id-input":{
+                            return ( <div className="card" style={{boxShadow: "10px 10px 6px -4px"}}>       
+                                        <div className="card-header">        
+                                            <h5>Secure Login</h5>
+                                        </div>
+                                        <div className="card-body">
+                                            <form onSubmit={this.handleFormSubmit.bind(this)}>
+                                                <div className="mb-3" style={{textAlign: "center"}}>
+                                                    <video id="face_video" className="rounded-circle flex-shrink-0" width="320" height="240" autoPlay muted></video>
+                                                    <br />
+                                                    <small>Look at camera, click the button to finish the verification.</small>
+                                                </div>
+                                                       
+                                                <div className="d-grid">
+                                                    <button type="button" className="btn btn-primary btn-block" id="face-id-input-btn"
+                                                        onClick={this.loginByFaceID.bind(this)}>
+                                                        <svg t="1681925148708" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13039" width="32" height="32"><path d="M512 959C265.53 959 65 758.47 65 512S265.53 65 512 65s447 200.53 447 447-200.53 447-447 447z m0-831.63c-212.09 0-384.63 172.54-384.63 384.63S299.91 896.63 512 896.63 896.63 724.09 896.63 512 724.09 127.37 512 127.37z" fill="#e6e6e6" p-id="13040"></path><path d="M435.69 749.37c-7.98 0-15.96-3.05-22.05-9.14L237.05 563.64c-12.18-12.17-12.18-31.93 0-44.1 12.18-12.18 31.92-12.18 44.1 0l154.54 154.54 307.16-307.15c12.18-12.18 31.92-12.18 44.1 0s12.18 31.93 0 44.1l-329.21 329.2a31.091 31.091 0 0 1-22.05 9.14z" fill="#e6e6e6" p-id="13041"></path></svg>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                            );
+                        }
+                        default:{
+                            return (<h1>Error</h1>);
+                        }
+                    }
+                }
+            }
+            
+            ReactDOM.render(
+                <LoginStep />,
+                document.getElementById('login-step')
+            );
+        </script>
+
+         <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+    </body>
+</html>

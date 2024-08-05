@@ -1,0 +1,11 @@
+#!/bin/sh
+./qemu-system-x86_64 \
+    -m 256M \
+    -nographic \
+    -kernel bzImage \
+    -append 'console=ttyS0 loglevel=3 oops=panic panic=1 kaslr smep smap' \
+    -monitor /dev/null \
+    -initrd ./initramfs.cpio.gz \
+    -device qwb \
+    -smp cores=1,threads=1 2>/dev/null
+

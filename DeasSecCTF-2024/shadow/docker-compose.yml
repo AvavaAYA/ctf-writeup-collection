@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+    my_shadow:
+        build:
+            context: ./
+            dockerfile: ./Dockerfile
+        ports:
+            - "10059:10059"

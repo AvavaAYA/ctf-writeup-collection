@@ -1,0 +1,53 @@
+---
+title: UTCTF-2022-bloat-writeup
+date: 2022-03-14 20:34:40
+categories:
+ - pwn-writeup
+tags: 
+ - UTCTF
+ - kernel
+
+---
+<!--more-->
+
+## 题目分析
+
+### 准备工作
+按照惯例，先解压:
+```sh
+mkdir rootfs
+cd rootfs
+mv ../rootfs.cpio.gz .
+gunzip ./rootfs.cpio.gz
+cpio -idmv < rootfs.cpio
+```
+
+kernel-pwn题目的突破口往往出现在出题者拓展的kernel-object中:
+```sh
+[rootfs]$ find ./ -name *.ko
+./lib/modules/5.15.0/extra/bloat.ko
+```
+
+为了方便后面的调试，先把bzImage解压成elf，并解析出部分符号表:
+```sh
+vmlinux-to-elf bzImage vmlinux.bin
+```
+在run.sh末尾加上-s与-S选项，进入gdb:
+```sh
+gdb ./vmlinux.bin
+(gdb)> target remote localhost:1234
+```
+当然，也可以直接
+```c
+gdb -ex 'set architecture i386:x86_64' \
+-ex 'target remote localhost:1234' \
+-ex 'add-symbol-file bloat.ko 0xffffffffc0000000' \
+-ex 'b load_bloat_binary' \
+-ex 'c' ./vmlinux.bin
+```
+一步到位，把断点下在load\_bloat\_binary函数上.
+
+--------
+
+### 漏洞分析
+将bloat.ko拿进ida中分析:
