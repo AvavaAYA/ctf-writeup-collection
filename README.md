@@ -43,6 +43,11 @@ I have pre-commit hooks for this readme:
 | [TFC CTF 2024](https://ctf.thefewchosen.com) | [GUARD-THE-BYPASS](./TFCCTF-2024/GUARD-THE-BYPASS) | tls, canary bypass |
 | 👆 | [VSPM](./TFCCTF-2024/VSPM) | double free |
 | 👆 | [MCBACK2DABASICS](./TFCCTF-2024/MCBACK2DABASICS) | double free, scanf |
+| [LIT CTF 2024](https://lit.lhsmathcs.org/ctf/challenges) | [How to Raise a Boring Vuln Flat](./LITCTF-2024/bflat) | strfmt outof stack, burp |
+| 👆 | [w4dup 2de](./LITCTF-2024/w4dup) | ret2dlresolve, dup |
+| 👆 | [recurse](./LITCTF-2024/recurse) | c attribute |
+| 👆 | [iloveseccomp](./LITCTF-2024/iloveseccomp) | side channel, exit value |
+| 👆 | [How to Raise a Boring Vuln](./LITCTF-2024/boring) | scanf, qsort |
 
 ---
 
