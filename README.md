@@ -48,9 +48,9 @@ I have pre-commit hooks for this readme:
 | 👆 | [recurse](./LITCTF-2024/recurse) | c attribute |
 | 👆 | [iloveseccomp](./LITCTF-2024/iloveseccomp) | side channel, exit value |
 | 👆 | [How to Raise a Boring Vuln](./LITCTF-2024/boring) | scanf, qsort |
+| [巅峰极客 2024](https://endbm.ichunqiu.com/2024dfjk) | [easyblind](./dfjk-2024/easyblind) | nightmare, linkmap, ld.so |
 | [SEKAI CTF 2024](https://ctf.sekai.team/) | [nolibc](./SekaiCTF-2024/nolibc) | self managed heap |
 | 👆 | [speedpwn](./SekaiCTF-2024/speedpwn) | fsop, scanf |
-| [巅峰极客 2024](https://endbm.ichunqiu.com/2024dfjk) | [easyblind](./dfjk-2024/easyblind) | nightmare, linkmap, ld.so |
 
 ---
 
