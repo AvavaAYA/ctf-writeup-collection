@@ -42,7 +42,10 @@ def leak_1_count():
         else:
             return i + 1
 
+
 def leak_libc():
+    return
+
 
 libc_1_count = leak_1_count()
 lg("libc_1_count", libc_1_count)
