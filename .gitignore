@@ -1,4 +1,5 @@
 **/.debug
+**/core
 **/.gdb_history
 ./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/qemu-system-aarch64
 ./d3ctf-2023/d3trustedhttpd/qemu-7.2.0/build/pc-bios/edk2-arm-code.fd
