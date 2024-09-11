@@ -56,6 +56,8 @@ I have pre-commit hooks for this readme:
 | 👆 | [logger](./YCB-2024/logger) | CHOP, try-catch |
 | 👆 | [httpd](./YCB-2024/httpd) | misc, URLencode |
 | 👆 | [hard sandbox](./YCB-2024/hard_sandbox) | ptrace, seccomp-bypass |
+| [WMCTF 2024](https://wmctf.wm-team.cn/) | [evm](./WMCTF-2024/evm) | vm pwn |
+| 👆 | [magicpp](./WMCTF-2024/magicpp) | cpp vector |
 
 ---
 
