@@ -51,6 +51,13 @@ I have pre-commit hooks for this readme:
 | [巅峰极客 2024](https://endbm.ichunqiu.com/2024dfjk) | [easyblind](./dfjk-2024/easyblind) | nightmare, linkmap, ld.so |
 | [SEKAI CTF 2024](https://ctf.sekai.team/) | [nolibc](./SekaiCTF-2024/nolibc) | self managed heap |
 | 👆 | [speedpwn](./SekaiCTF-2024/speedpwn) | fsop, scanf |
+| [羊城杯 2024](https://2024ycb.dasctf.com/) | [TravelGraph](./YCB-2024/TravelGraph) | heapfengshui |
+| 👆 | [pstack](./YCB-2024/pstack) | stack pivoting |
+| 👆 | [logger](./YCB-2024/logger) | CHOP, try-catch |
+| 👆 | [httpd](./YCB-2024/httpd) | misc, URLencode |
+| 👆 | [hard sandbox](./YCB-2024/hard_sandbox) | ptrace, seccomp-bypass |
+| [WMCTF 2024](https://wmctf.wm-team.cn/) | [evm](./WMCTF-2024/evm) | vm pwn |
+| 👆 | [magicpp](./WMCTF-2024/magicpp) | cpp vector |
 
 ---
 
