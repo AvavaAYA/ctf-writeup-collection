@@ -202,6 +202,7 @@ payload = flat(
 )
 s(payload)
 
+debugB()
 add(b"plane", b"guangzhou", b"guangzhou", 999, b"d")
 cmd(9)
 

@@ -1,0 +1,4 @@
+services:
+    ducts:
+        build: .
+        network_mode: host

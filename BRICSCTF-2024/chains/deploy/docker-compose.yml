@@ -1,0 +1,11 @@
+services:
+  chains:
+    build: .
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - 17173:31337
+    cpus: 1
+    mem_limit: 256M
+    memswap_limit: 256M
+    stop_grace_period: 3s
