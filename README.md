@@ -58,6 +58,7 @@ I have pre-commit hooks for this readme:
 | 👆 | [hard sandbox](./YCB-2024/hard_sandbox) | ptrace, seccomp-bypass |
 | [WMCTF 2024](https://wmctf.wm-team.cn/) | [evm](./WMCTF-2024/evm) | vm pwn |
 | 👆 | [magicpp](./WMCTF-2024/magicpp) | cpp vector |
+| [SCTF 2024](https://ctftime.org/event/2483/) | [kno_puts](./SCTF-2024/kno_puts) | kernel, userfaultfd race |
 | [BRICS+ CTF 2024](https://brics-ctf.com/) | [chains](./BRICSCTF-2024/chains) | UAF |
 | 👆 | [physler](./BRICSCTF-2024/physler) | kernel |
 | 👆 | [gollum](./BRICSCTF-2024/gollum) | go |
