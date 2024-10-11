@@ -1,0 +1,7 @@
+version: "2"
+services:
+  kernel-network:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "14132:8888"

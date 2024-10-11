@@ -62,6 +62,10 @@ I have pre-commit hooks for this readme:
 | [BRICS+ CTF 2024](https://brics-ctf.com/) | [chains](./BRICSCTF-2024/chains) | UAF |
 | 👆 | [physler](./BRICSCTF-2024/physler) | kernel |
 | 👆 | [gollum](./BRICSCTF-2024/gollum) | go |
+| [华为杯研赛 2024](https://cpipc.acge.org.cn/cw/hp/2c90800c8093eef401809d33b36f0652) | [cancanneed_new](./CPIPC-2024-Quals/cancanneed_new) | IO |
+| 👆 | [stack_and_heap](./CPIPC-2024-Quals/stack_and_heap) | double free |
+| 👆 | [mips_fmt](./CPIPC-2024-Quals/mips_fmt) | mips32, strfmt |
+| 👆 | [kernel-network](./CPIPC-2024-Quals/kernel-network) | kernel, UAF |
 
 ---
 
