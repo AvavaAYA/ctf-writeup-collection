@@ -12,6 +12,7 @@ I have pre-commit hooks for this readme:
 | Source | Challenge | Keywords |
 | :--: | :--: | :--: |
 | [*CTF 2019](NULL) | [oob](./StarCTF-2019/pwn-OOB) | v8 |
+| [HackPack CTF 2022](https://ctf2022.hackpack.club/) | [Cerebrum Boggled](./HackPack-2022/cerebrum-boggled) | brainfuck, jit |
 | [GoogleCTF-2023](https://capturetheflag.withgoogle.com/challenges) | [ubf](./GoogleCTF-2023/ubf/) | int-overflow |
 | 👆 | [stroygen](./GoogleCTF-2023/stroygen/) | Misc |
 | 👆 | [gradebook](./GoogleCTF-2023/gradebook/) | TOCTOU |
