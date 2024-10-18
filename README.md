@@ -71,7 +71,6 @@ I have pre-commit hooks for this readme:
 | 👆 | [mips_fmt](./CPIPC-2024-Quals/mips_fmt) | mips32, strfmt |
 | 👆 | [kernel-network](./CPIPC-2024-Quals/kernel-network) | kernel, UAF |
 | [安网杯 2024](https://t.me/rin_notebook/1408?comment=1959) | [pwn1](./AWB-2024/pwn1) | VM pwn |
-| [JQCTF-2023]() | [from_1_to_N](./JQCTF-2023/from_1_to_N) |  |
 
 ---
 
