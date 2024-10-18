@@ -66,6 +66,8 @@ I have pre-commit hooks for this readme:
 | 👆 | [stack_and_heap](./CPIPC-2024-Quals/stack_and_heap) | double free |
 | 👆 | [mips_fmt](./CPIPC-2024-Quals/mips_fmt) | mips32, strfmt |
 | 👆 | [kernel-network](./CPIPC-2024-Quals/kernel-network) | kernel, UAF |
+| [安网杯 2024](https://t.me/rin_notebook/1408?comment=1959) | [pwn1](./AWB-2024/pwn1) | VM pwn |
+| [b01lers CTF 2024](https://ctf.b01lers.com/home) | [mixtpeailbc](./b01lersCTF-2024/mixtpeailbc) | VM pwn |
 
 ---
 
