@@ -1,4 +1,10 @@
-# YoungManesCApe
+---
+data: 2024-10-13 19:55
+challenge: YoungManesCApe
+tags:
+  - chroot
+  - fsmount
+---
 
 > Chroot 从来不是一个安全特性。
 

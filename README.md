@@ -26,9 +26,11 @@ I have pre-commit hooks for this readme:
 | [WACON 2023]() | [heaphp](./WACON-2023/heaphp/) | php |
 | [WMCTF 2023](https://wmctf.wm-team.cn) | [blindless](./WMCTF-2023/blindless/) | house of blindless |
 | [ACTF 2023]() | [blind](./actf-2023/blind) | BROP |
+| 👆 | [blind](./actf-2023/blind) | BROP with PIE |
 | 👆 | [master of orw](./actf-2023/master-of-orw) | seccomp-bypass, iouring |
 | 👆 | [YoungManesCApe](./actf-2023/YoungManesCApe) | chroot escape |
-| [京麒CTF - 2023]() | [solo-sudden death](./JQCTF-2023/solo-sudden_death) | solo |
+| [京麒CTF - 2023](./JQCTF-2023/) | [solo-sudden death](./JQCTF-2023/solo-sudden_death) | solo |
+| 👆 | [Re: 从一开始的 orw 生活](./JQCTF-2023/from_1_to_N) | iouring |
 | [b01lers CTF 2024](https://ctf.b01lers.com/home) | [mixtpeailbc](./b01lersCTF-2024/mixtpeailbc) | VM pwn |
 | [D^3CTF 2024](https://race.d3ctf.cn/contest/1) | [PwnShell](d3ctf-2024/PwnShell/) | php, off-by-null |
 | 👆 | [D3BabyEscape](d3ctf-2024/escape/) | qemu, escape |
@@ -69,6 +71,7 @@ I have pre-commit hooks for this readme:
 | 👆 | [mips_fmt](./CPIPC-2024-Quals/mips_fmt) | mips32, strfmt |
 | 👆 | [kernel-network](./CPIPC-2024-Quals/kernel-network) | kernel, UAF |
 | [安网杯 2024](https://t.me/rin_notebook/1408?comment=1959) | [pwn1](./AWB-2024/pwn1) | VM pwn |
+| [JQCTF-2023]() | [from_1_to_N](./JQCTF-2023/from_1_to_N) |  |
 
 ---
 
