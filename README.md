@@ -10,7 +10,7 @@ I have pre-commit hooks for this readme:
 ## Challenges With Write-Up
 
 | Source | Challenge | Keywords |
-| :--: | :--: | :--: |
+| -- | -- | -- |
 | [*CTF 2019](NULL) | [oob](./StarCTF-2019/pwn-OOB) | v8 |
 | [HackPack CTF 2022](https://ctf2022.hackpack.club/) | [Cerebrum Boggled](./HackPack-2022/cerebrum-boggled) | brainfuck, jit |
 | [GoogleCTF-2023](https://capturetheflag.withgoogle.com/challenges) | [ubf](./GoogleCTF-2023/ubf/) | int-overflow |
@@ -25,8 +25,7 @@ I have pre-commit hooks for this readme:
 | 👆 | [ret2libc](./SecurinetsCTFQuals2023/ret2libc/) | ld.so |
 | [WACON 2023]() | [heaphp](./WACON-2023/heaphp/) | php |
 | [WMCTF 2023](https://wmctf.wm-team.cn) | [blindless](./WMCTF-2023/blindless/) | house of blindless |
-| [ACTF 2023]() | [blind](./actf-2023/blind) | BROP |
-| 👆 | [blind](./actf-2023/blind) | BROP with PIE |
+| [ACTF 2023]() | [blind](./actf-2023/blind) | BROP with PIE |
 | 👆 | [master of orw](./actf-2023/master-of-orw) | seccomp-bypass, iouring |
 | 👆 | [YoungManesCApe](./actf-2023/YoungManesCApe) | chroot escape |
 | [京麒CTF - 2023](./JQCTF-2023/) | [solo-sudden death](./JQCTF-2023/solo-sudden_death) | solo |
@@ -71,6 +70,8 @@ I have pre-commit hooks for this readme:
 | 👆 | [mips_fmt](./CPIPC-2024-Quals/mips_fmt) | mips32, strfmt |
 | 👆 | [kernel-network](./CPIPC-2024-Quals/kernel-network) | kernel, UAF |
 | [安网杯 2024](https://t.me/rin_notebook/1408?comment=1959) | [pwn1](./AWB-2024/pwn1) | VM pwn |
+| [TCP1P CTF 2024](https://github.com/TCP1P/TCP1P-CTF-2024-Challenges-Public) | [Baby CFHP](./TCP1PCTF-2024/baby_cfhp) | IO |
+| [网鼎杯 2024 青龙组线上](https://www.wangdingcup.com/) | [pwn-02](./wangdingbei-qual-2024/pwn02) | stack pivoting |
 
 ---
 
