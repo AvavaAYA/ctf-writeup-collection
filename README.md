@@ -73,7 +73,8 @@ I have pre-commit hooks for this readme:
 | [TCP1P CTF 2024](https://github.com/TCP1P/TCP1P-CTF-2024-Challenges-Public) | [Baby CFHP](./TCP1PCTF-2024/baby_cfhp) | IO |
 | [网鼎杯 2024 青龙组线上](https://www.wangdingcup.com/) | [pwn-02](./wangdingbei-qual-2024/pwn02) | stack pivoting |
 | 👆 | [pwn-04](./wangdingbei-qual-2024/pwn04) | UAF |
-| 👆 | [pwn-03](./wangdingbei-qual-2024/pwn03) | jerryscript, unsolved |
+| 👆 | [pwn-03](./wangdingbei-qual-2024/pwn03) | jerryscript |
+| [强网拟态 2024 决赛]() | [遗忘方舟](./QWNT-2024-final/aoo) | riscv |
 
 ---
 

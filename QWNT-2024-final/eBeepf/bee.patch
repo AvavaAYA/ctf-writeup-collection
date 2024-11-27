@@ -1,0 +1,30 @@
+diff -r linux-6.11.7/include/uapi/linux/bpf.h linux-6.11.7.patched/include/uapi/linux/bpf.h
+960a961
+> 	BPF_MAP_RESET_REF,
+diff -r linux-6.11.7/kernel/bpf/syscall.c linux-6.11.7.patched/kernel/bpf/syscall.c
+5690a5691,5711
+> static int bpf_map_do_reset_ref(union bpf_attr *attr)
+> {
+>       int ufd = attr->map_fd;
+>       struct bpf_map *map;
+>       struct fd f;
+>       f = fdget(ufd);
+>       map = __bpf_map_get(f);
+>       if (IS_ERR(map)) {
+>               fdput(f);
+>               return PTR_ERR(map);
+>       }
+>       if (map->max_entries > 60) {
+>               fdput(f);
+>               return -EINVAL;
+>       }
+>       atomic64_set(&map->refcnt, 1);
+>       atomic64_set(&map->sleepable_refcnt, 0);
+>       fdput(f);
+>       return 0;
+> }
+> 
+5825a5847,5849
+> 		break;
+> 	case BPF_MAP_RESET_REF:
+> 		err = bpf_map_do_reset_ref(&attr);

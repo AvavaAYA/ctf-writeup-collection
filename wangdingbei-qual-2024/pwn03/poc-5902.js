@@ -1,1 +1,0 @@
-import { nFromEvent as '' }

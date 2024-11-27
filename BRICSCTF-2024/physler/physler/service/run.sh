@@ -1,12 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 qemu-system-x86_64 \
     -s -m 96M \
     -cpu kvm64,+smep,+smap \
     -kernel bzImage \
-    -initrd initramfs.cpio.gz \
+    -initrd initramfs.cpio \
     -snapshot \
     -nographic \
     -monitor /dev/null \
     -no-reboot \
-    -append "console=ttyS0 kaslr kpti=1 quiet panic=1"
+    -append "console=ttyS0 kaslr kpti=1 quiet panic=1" \
+    -drive file=exploit,format=raw
